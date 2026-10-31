@@ -70,6 +70,8 @@ Déposer le projet complet (avec `vendor/` et un `.env` rempli) dans le dossier 
 - le `.htaccess` racine sert `public/` même si la racine web du sous-domaine pointe sur le projet ;
 - sans cron, les tâches planifiées tournent après la réponse aux visites ; sans serveur SMTP, les e-mails partent par la messagerie locale de l'hébergeur.
 
+PHP 8.2 au minimum est requis (8.3 conseillé) : sur o2switch, le choisir dans **cPanel › Sélecteur de version PHP**. Sur une version plus ancienne, le site affiche la marche à suivre au lieu d'une page vide. Dans le Terminal, la commande `php` peut rester sur une ancienne version : utiliser alors `/opt/alt/php83/usr/bin/php`.
+
 Un cron (`php bin/cron.php echues` toutes les 5 minutes) reste conseillé pour que les rondes manquées et les alertes soient signalées même la nuit, quand personne ne se connecte.
 
 ### Installation complète
