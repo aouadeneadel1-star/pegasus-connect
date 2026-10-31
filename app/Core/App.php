@@ -50,6 +50,7 @@ final class App
     public function handle(Request $request): Response
     {
         try {
+            $this->factory->installation()->verifier();
             Session::start(str_starts_with($this->factory->appUrl(), 'https://'), $this->factory->storage() . '/sessions');
             $this->factory->audit()->definirContexte(null, $request->ip(), $request->userAgent());
 

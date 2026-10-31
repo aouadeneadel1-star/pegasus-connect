@@ -46,6 +46,7 @@ use App\Services\Crypto\Chiffrement;
 use App\Services\Crypto\Cles;
 use App\Services\Destinataires;
 use App\Services\Heures\HeuresService;
+use App\Services\Installation\Installation;
 use App\Services\Mail\EnvoiEmails;
 use App\Services\Mail\FileEmails;
 use App\Services\Notifications;
@@ -69,6 +70,7 @@ use App\Services\Stockage\Stockage;
 use App\Services\Stockage\UrlSignee;
 use App\Services\Taches\AlertesEcheances;
 use App\Services\Taches\SurveillancePointages;
+use App\Services\Taches\TachesPlanifiees;
 use PDO;
 
 /**
@@ -509,6 +511,20 @@ final class Factory
             $this->pdf(),
             $this->parametres(),
         ));
+    }
+
+    public function installation(): Installation
+    {
+        return $this->instance(Installation::class, fn (): Installation => new Installation(
+            $this->pdo(),
+            $this->racine,
+            $this->storage() . '/locks/installation',
+        ));
+    }
+
+    public function tachesPlanifiees(): TachesPlanifiees
+    {
+        return $this->instance(TachesPlanifiees::class, fn (): TachesPlanifiees => new TachesPlanifiees($this));
     }
 
     public function sauvegardeBase(): SauvegardeBase

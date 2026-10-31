@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Core\App;
+use App\Core\Env;
+use App\Core\Log;
 use App\Core\Request;
 
 $racine = dirname(__DIR__);
@@ -19,3 +21,21 @@ require $racine . '/vendor/autoload.php';
 
 $factory = App::boot($racine);
 (new App($factory))->handle(Request::fromGlobals())->send();
+
+// Sans cron sur l'hébergement, les tâches échues tournent ici, une fois la réponse partie :
+// le visiteur n'attend pas. Désactivable par TACHES_AUTOMATIQUES=0 si un cron est en place.
+$terminer = match (true) {
+    function_exists('fastcgi_finish_request') => 'fastcgi_finish_request',
+    function_exists('litespeed_finish_request') => 'litespeed_finish_request',
+    default => null,
+};
+if ($terminer !== null && Env::bool('TACHES_AUTOMATIQUES', true)) {
+    $terminer();
+    ignore_user_abort(true);
+    set_time_limit(90);
+    try {
+        $factory->tachesPlanifiees()->executerEchues(60);
+    } catch (Throwable $exception) {
+        Log::exception($exception);
+    }
+}

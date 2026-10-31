@@ -75,8 +75,18 @@ final class EnvoiEmails
     private function mailer(): PHPMailer
     {
         $mailer = new PHPMailer(true);
+        // Sans serveur SMTP renseigné, l'envoi passe par la messagerie locale de l'hébergeur.
+        if ((string) Env::get('MAIL_HOST', '') === '') {
+            $mailer->isMail();
+            $mailer->CharSet = 'UTF-8';
+            $mailer->Encoding = 'base64';
+            $mailer->setFrom((string) Env::get('MAIL_FROM', 'no-reply@pegasus-insure.fr'), (string) Env::get('MAIL_FROM_NAME', 'Pegasus Insure'));
+            $mailer->isHTML(true);
+
+            return $mailer;
+        }
         $mailer->isSMTP();
-        $mailer->Host = (string) Env::get('MAIL_HOST', 'localhost');
+        $mailer->Host = (string) Env::get('MAIL_HOST');
         $mailer->Port = (int) Env::get('MAIL_PORT', '465');
         $mailer->SMTPAuth = (string) Env::get('MAIL_USER', '') !== '';
         $mailer->Username = (string) Env::get('MAIL_USER', '');

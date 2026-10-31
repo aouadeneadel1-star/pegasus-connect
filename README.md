@@ -61,6 +61,19 @@ Les tests d'intégration vident les tables qu'ils utilisent : ils refusent de to
 
 ## Installation sur o2switch
 
+### Installation simple (sans ligne de commande)
+
+Déposer le projet complet (avec `vendor/` et un `.env` rempli) dans le dossier du sous-domaine, par exemple en décompressant l'archive avec le gestionnaire de fichiers de cPanel. Rien d'autre n'est nécessaire :
+
+- la première visite crée les tables et charge les données initiales ; une nouvelle version applique ses migrations à la visite suivant le dépôt, sans toucher aux paramètres déjà réglés ;
+- si `INSTALLATION_ADMIN_EMAIL` et `INSTALLATION_INVITATION` (empreinte SHA-256 du lien d'invitation) sont renseignés, le premier compte administrateur est créé en attente d'activation ;
+- le `.htaccess` racine sert `public/` même si la racine web du sous-domaine pointe sur le projet ;
+- sans cron, les tâches planifiées tournent après la réponse aux visites ; sans serveur SMTP, les e-mails partent par la messagerie locale de l'hébergeur.
+
+Un cron (`php bin/cron.php echues` toutes les 5 minutes) reste conseillé pour que les rondes manquées et les alertes soient signalées même la nuit, quand personne ne se connecte.
+
+### Installation complète
+
 1. **cPanel › Sélecteur de version PHP** : choisir PHP 8.3 et activer `pdo_mysql`, `sodium`, `gd`, `mbstring`, `fileinfo`, `zip`, `intl`.
 2. **cPanel › Bases de données MySQL** : créer la base et son utilisateur, avec tous les privilèges sur cette base.
 3. **cPanel › Domaines** : créer le sous-domaine (ex. `app.pegasus-insure.fr`) avec la racine `pegasus/public`, ou, s'il existe déjà, cliquer sur **Gérer** pour modifier sa racine. Activer le certificat SSL (AutoSSL). Si la racine reste sur le dossier du projet, le `.htaccess` racine renvoie tout vers `public/` : l'application fonctionne et le reste du projet n'est pas servi.
