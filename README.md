@@ -63,7 +63,7 @@ Les tests d'intégration vident les tables qu'ils utilisent : ils refusent de to
 
 1. **cPanel › Sélecteur de version PHP** : choisir PHP 8.3 et activer `pdo_mysql`, `sodium`, `gd`, `mbstring`, `fileinfo`, `zip`, `intl`.
 2. **cPanel › Bases de données MySQL** : créer la base et son utilisateur, avec tous les privilèges sur cette base.
-3. **cPanel › Domaines** : créer le sous-domaine (ex. `app.pegasus-insure.fr`) avec la racine `pegasus/public`. Activer le certificat SSL (AutoSSL).
+3. **cPanel › Domaines** : créer le sous-domaine (ex. `app.pegasus-insure.fr`) avec la racine `pegasus/public`, ou, s'il existe déjà, cliquer sur **Gérer** pour modifier sa racine. Activer le certificat SSL (AutoSSL). Si la racine reste sur le dossier du projet, le `.htaccess` racine renvoie tout vers `public/` : l'application fonctionne et le reste du projet n'est pas servi.
 4. Déposer le projet dans `~/pegasus` (SSH, SFTP ou gestionnaire de fichiers), sans `.env` ni `vendor/`, puis en SSH :
 
    ```bash
@@ -80,7 +80,7 @@ Les tests d'intégration vident les tables qu'ils utilisent : ils refusent de to
 
    La version de PHP en ligne de commande peut différer de celle du site : `php -v` doit afficher la même version que celle choisie dans cPanel. Sinon, appeler le binaire complet (ex. `/usr/local/bin/php83` selon le serveur) dans les commandes et dans le cron.
 
-5. Vérifier que `https://<sous-domaine>/.user.ini` et `https://<sous-domaine>/.htaccess` renvoient une erreur 403. Le reste du projet est hors de la racine web et ne doit jamais être accessible.
+5. Vérifier que `https://<sous-domaine>/.env`, `/.user.ini` et `/composer.json` ne renvoient jamais leur contenu (page introuvable ou erreur 403). Le reste du projet ne doit jamais être accessible.
 
 `APP_KEY` ne doit plus jamais changer une fois l'application en service : elle protège les numéros de sécurité sociale chiffrés, signe les QR codes imprimés et chiffre les sauvegardes. La conserver dans le coffre-fort de mots de passe de la direction.
 

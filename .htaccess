@@ -1,3 +1,13 @@
-# Seul public/ doit être exposé. Ce fichier protège le reste du projet
-# si la racine web est mal configurée.
-Require all denied
+# La racine web doit pointer sur public/. Si l'hébergement la laisse sur le dossier du projet,
+# chaque requête est réécrite en interne vers public/ : le code, la configuration et les
+# données ne sont jamais servis, et l'application fonctionne sans réglage supplémentaire.
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    Require all denied
+</IfModule>
