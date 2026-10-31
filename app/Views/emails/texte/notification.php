@@ -1,0 +1,8 @@
+Bonjour <?= $nom ?? '' ?>,
+
+<?= $titre ?>
+
+<?= empty($message) ? '' : $message . "\n" ?>
+
+<?= $lien ?>
+

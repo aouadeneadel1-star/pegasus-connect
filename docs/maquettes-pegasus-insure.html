@@ -1,0 +1,1869 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquettes Pegasus Connect</title>
+<meta name="description" content="Maquettes HTML/CSS de la plateforme employés Pegasus Insure : écrans agent, borne, administration et portail client.">
+<style>
+/* =====================================================================
+   TOKENS — identiques à la charte (§ 7.7 du cahier des charges)
+   ===================================================================== */
+:root{
+  --pg-noir:#111214;--pg-rouge:#A51D24;--pg-rouge-hover:#861519;--pg-rouge-voile:#F8E8E9;--pg-graphite:#2B2F36;
+  --c-bg:#F4F5F7;--c-surface:#FFFFFF;--c-surface-2:#ECEEF1;--c-text:#16181D;--c-text-2:#5A606B;
+  --c-border:#D5D9DF;--c-border-input:#8A919C;--c-cta:var(--pg-rouge);--c-cta-hover:var(--pg-rouge-hover);
+  --c-cta-text:#FFFFFF;--c-link:var(--pg-rouge);--c-nav:var(--pg-noir);--c-nav-text:#FFFFFF;--c-focus:#1D4ED8;
+  --c-success:#1E7B4A;--c-success-bg:#E7F4EC;--c-warning:#9A5200;--c-warning-bg:#FDF1E3;
+  --c-danger:#B42318;--c-danger-bg:#FDECEA;--c-info:#1D4ED8;--c-info-bg:#E8EEFC;--c-muted:#6B7280;--c-muted-bg:#EEF0F3;
+  --font-title:"Saira","Segoe UI",system-ui,sans-serif;
+  --font-body:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+  --sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;--sp-7:48px;--sp-8:64px;
+  --r-sm:6px;--r-md:10px;--r-lg:16px;--r-pill:999px;
+  --sh-sm:0 1px 2px rgba(17,18,20,.06),0 1px 3px rgba(17,18,20,.08);
+  --sh-md:0 4px 12px rgba(17,18,20,.10);--sh-lg:0 12px 32px rgba(17,18,20,.16);
+  --t-fast:150ms ease;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --c-bg:#0E0F11;--c-surface:#17191D;--c-surface-2:#22252B;--c-text:#ECEDEF;--c-text-2:#A7ADB7;
+    --c-border:#30343B;--c-border-input:#6B727D;--c-cta:#C42A31;--c-cta-hover:#D8363E;--c-link:#F0686D;
+    --c-nav:#0B0C0E;--c-focus:#6EA8FE;--pg-rouge-voile:#3A1517;
+    --c-success:#4CC38A;--c-success-bg:#12291D;--c-warning:#F0A54A;--c-warning-bg:#2D2112;
+    --c-danger:#FF7A70;--c-danger-bg:#33161A;--c-info:#6EA8FE;--c-info-bg:#142038;--c-muted:#9AA1AC;--c-muted-bg:#24272D;
+    --sh-sm:0 1px 2px rgba(0,0,0,.5);--sh-md:0 4px 12px rgba(0,0,0,.5);--sh-lg:0 12px 32px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --c-bg:#0E0F11;--c-surface:#17191D;--c-surface-2:#22252B;--c-text:#ECEDEF;--c-text-2:#A7ADB7;
+  --c-border:#30343B;--c-border-input:#6B727D;--c-cta:#C42A31;--c-cta-hover:#D8363E;--c-link:#F0686D;
+  --c-nav:#0B0C0E;--c-focus:#6EA8FE;--pg-rouge-voile:#3A1517;
+  --c-success:#4CC38A;--c-success-bg:#12291D;--c-warning:#F0A54A;--c-warning-bg:#2D2112;
+  --c-danger:#FF7A70;--c-danger-bg:#33161A;--c-info:#6EA8FE;--c-info-bg:#142038;--c-muted:#9AA1AC;--c-muted-bg:#24272D;
+  --sh-sm:0 1px 2px rgba(0,0,0,.5);--sh-md:0 4px 12px rgba(0,0,0,.5);--sh-lg:0 12px 32px rgba(0,0,0,.6);
+}
+@media (prefers-reduced-motion:reduce){:root{--t-fast:0ms}}
+
+/* =====================================================================
+   BASE
+   ===================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font:400 15px/1.5 var(--font-body);overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--font-title);margin:0;line-height:1.2;letter-spacing:.005em}
+p{margin:0}
+a{color:var(--c-link)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--c-focus);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--font-mono);font-weight:500;font-size:.9em}
+.muted{color:var(--c-text-2)}
+.small{font-size:13px}
+.xs{font-size:12px}
+.strong{font-weight:600}
+.tnum{font-variant-numeric:tabular-nums}
+.icon{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.icon.lg{width:24px;height:24px}.icon.xl{width:32px;height:32px}.icon.sm{width:16px;height:16px}
+.row{display:flex;align-items:center;gap:var(--sp-2)}
+.row.between{justify-content:space-between}
+.row.wrap{flex-wrap:wrap}
+.stack{display:flex;flex-direction:column;gap:var(--sp-3)}
+.stack.tight{gap:var(--sp-2)}
+.grow{flex:1;min-width:0}
+.center{text-align:center}
+
+/* =====================================================================
+   PAGE DE PRÉSENTATION DES MAQUETTES
+   ===================================================================== */
+.doc-header{position:sticky;top:0;z-index:20;background:var(--pg-noir);color:#fff;border-bottom:3px solid var(--pg-rouge)}
+.doc-header .inner{max-width:1400px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.doc-header h1{font-size:18px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.doc-header nav{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.doc-header nav a{color:#fff;text-decoration:none;font-size:13px;font-weight:600;padding:6px 10px;border-radius:var(--r-pill);background:rgba(255,255,255,.08)}
+.doc-header nav a:hover{background:rgba(255,255,255,.18)}
+.theme-toggle{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:var(--r-pill);padding:6px 12px;cursor:pointer;font-size:13px;font-weight:600}
+.doc-main{max-width:1400px;margin:0 auto;padding:24px 16px 80px}
+.doc-intro{max-width:820px;margin-bottom:24px}
+.doc-intro h2{font-size:28px;margin-bottom:8px}
+.doc-section{margin-top:48px}
+.doc-section>h2{font-size:22px;padding-bottom:8px;border-bottom:2px solid var(--c-border);margin-bottom:20px;display:flex;gap:10px;align-items:center}
+.doc-section>h2 .tag{font:600 12px var(--font-body);text-transform:uppercase;letter-spacing:.06em;background:var(--pg-rouge);color:#fff;padding:3px 8px;border-radius:var(--r-sm)}
+.screens{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:32px 24px;align-items:start}
+.screen{scroll-margin-top:90px}
+.screen>figcaption{font:600 14px var(--font-title);margin-bottom:10px;display:flex;gap:8px;align-items:baseline}
+.screen>figcaption .code{font:600 12px var(--font-mono);color:var(--c-text-2)}
+.screen{margin:0}
+.screens.wide{grid-template-columns:minmax(0,1fr)}
+.screen{min-width:0}
+.main,.page,.card,.grid-2>*,.grid-3>*{min-width:0}
+
+/* =====================================================================
+   CADRES : TÉLÉPHONE / NAVIGATEUR / TABLETTE
+   ===================================================================== */
+.phone{width:100%;max-width:380px;margin:0 auto;background:var(--c-bg);border:10px solid #050506;border-radius:40px;box-shadow:var(--sh-lg);overflow:hidden;display:flex;flex-direction:column;height:780px;position:relative}
+.ph-status{height:28px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font:600 12px var(--font-body);background:var(--c-nav);color:#fff}
+.ph-body{flex:1;overflow:auto;display:flex;flex-direction:column}
+.ph-body.pad{padding:16px}
+.app-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--c-nav);color:#fff;flex:none}
+.app-bar h3{font-size:17px;font-weight:600;flex:1}
+.app-bar .ib{background:none;border:0;color:#fff;width:40px;height:40px;display:grid;place-items:center;border-radius:var(--r-pill);cursor:pointer;position:relative}
+.app-bar .dot{position:absolute;top:6px;right:6px;min-width:16px;height:16px;border-radius:8px;background:var(--pg-rouge);font:700 10px/16px var(--font-body);color:#fff;padding:0 4px}
+.content{padding:16px;display:flex;flex-direction:column;gap:12px}
+
+.tabbar{flex:none;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;background:var(--c-surface);border-top:1px solid var(--c-border);height:68px;padding-bottom:6px;position:relative}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;font:600 11px var(--font-body);color:var(--c-text-2);text-decoration:none;padding-top:8px;border-top:3px solid transparent;height:100%}
+.tab.active{color:var(--c-cta);border-top-color:var(--c-cta)}
+.tab.center{position:relative}
+.tab.center .disc{width:60px;height:60px;border-radius:50%;background:var(--c-cta);color:#fff;display:grid;place-items:center;margin-top:-30px;box-shadow:var(--sh-md);border:4px solid var(--c-surface)}
+
+.browser{background:var(--c-surface);border:1px solid var(--c-border);border-radius:12px;box-shadow:var(--sh-lg);overflow:hidden}
+.bw-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--c-surface-2);border-bottom:1px solid var(--c-border)}
+.bw-bar i{width:10px;height:10px;border-radius:50%;background:#D0D4DA;display:block}
+.bw-url{flex:1;background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-pill);padding:3px 12px;font:12px var(--font-mono);color:var(--c-text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.tablet{max-width:980px;margin:0 auto;border:14px solid #050506;border-radius:28px;box-shadow:var(--sh-lg);overflow:hidden}
+
+/* =====================================================================
+   COMPOSANTS
+   ===================================================================== */
+.card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-md);padding:16px;box-shadow:var(--sh-sm)}
+.card.flat{box-shadow:none}
+.card h4{font-size:16px;font-weight:600;margin-bottom:8px}
+.card-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.card-title h4{margin:0}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border-radius:var(--r-md);border:1px solid transparent;font:600 15px var(--font-title);letter-spacing:.02em;cursor:pointer;text-decoration:none;transition:background var(--t-fast)}
+.btn.sm{min-height:36px;padding:0 12px;font-size:13px}
+.btn.block{width:100%}
+.btn-primary{background:var(--c-cta);color:var(--c-cta-text)}
+.btn-primary:hover{background:var(--c-cta-hover)}
+.btn-dark{background:var(--pg-noir);color:#fff}
+:root[data-theme="dark"] .btn-dark{background:#2B2F36}
+.btn-outline{background:var(--c-surface);color:var(--c-text);border-color:var(--c-border-input)}
+.btn-danger{background:var(--c-danger);color:#fff}
+.btn-ghost{background:transparent;color:var(--c-link);border:0;min-height:40px}
+.btn-xl{min-height:64px;font-size:18px;text-transform:uppercase;letter-spacing:.05em;border-radius:14px;box-shadow:var(--sh-md)}
+
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-weight:600;font-size:14px}
+.input,.select,.textarea{width:100%;min-height:48px;padding:10px 12px;border:1px solid var(--c-border-input);border-radius:var(--r-sm);background:var(--c-surface);font-size:16px}
+.textarea{min-height:96px;resize:vertical}
+.select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--c-text-2) 50%),linear-gradient(135deg,var(--c-text-2) 50%,transparent 50%);background-position:calc(100% - 18px) 21px,calc(100% - 13px) 21px;background-size:5px 5px;background-repeat:no-repeat;padding-right:34px}
+.input.sm,.select.sm{min-height:36px;font-size:14px;padding:6px 10px}
+.select.sm{background-position:calc(100% - 18px) 15px,calc(100% - 13px) 15px}
+.help{font-size:13px;color:var(--c-text-2)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.check input{width:20px;height:20px;accent-color:var(--c-cta);margin:1px 0 0}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font:600 11px/1 var(--font-body);text-transform:uppercase;letter-spacing:.04em;padding:5px 8px;border-radius:var(--r-pill);white-space:nowrap}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.b-success{background:var(--c-success-bg);color:var(--c-success)}
+.b-warning{background:var(--c-warning-bg);color:var(--c-warning)}
+.b-danger{background:var(--c-danger-bg);color:var(--c-danger)}
+.b-info{background:var(--c-info-bg);color:var(--c-info)}
+.b-muted{background:var(--c-muted-bg);color:var(--c-muted)}
+.b-brand{background:var(--pg-rouge-voile);color:var(--c-link)}
+
+.banner{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:var(--r-md);font-size:14px;border:1px solid transparent}
+.banner .icon{margin-top:1px}
+.banner.warning{background:var(--c-warning-bg);color:var(--c-warning);border-color:color-mix(in srgb,var(--c-warning) 25%,transparent)}
+.banner.info{background:var(--c-info-bg);color:var(--c-info)}
+.banner.danger{background:var(--c-danger-bg);color:var(--c-danger)}
+.banner.success{background:var(--c-success-bg);color:var(--c-success)}
+.banner b{color:inherit}
+.banner span.t{color:var(--c-text)}
+
+.list{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-md);overflow:hidden}
+.li{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--c-border);min-height:56px}
+.li:last-child{border-bottom:0}
+.li .ico{width:40px;height:40px;border-radius:var(--r-md);background:var(--c-surface-2);display:grid;place-items:center;color:var(--c-text-2);flex:none}
+.li .ico.brand{background:var(--pg-rouge-voile);color:var(--c-link)}
+.li .t1{font-weight:600;font-size:15px}
+.li .t2{font-size:13px;color:var(--c-text-2)}
+.list-head{font:600 12px var(--font-body);text-transform:uppercase;letter-spacing:.06em;color:var(--c-text-2);padding:8px 2px 0}
+
+.seg{display:inline-flex;background:var(--c-surface-2);border-radius:var(--r-md);padding:3px;gap:2px}
+.seg button{border:0;background:transparent;padding:7px 12px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;color:var(--c-text-2)}
+.seg button.on{background:var(--c-surface);color:var(--c-text);box-shadow:var(--sh-sm)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.chip{border:1px solid var(--c-border-input);background:var(--c-surface);border-radius:var(--r-pill);padding:6px 12px;font-size:13px;font-weight:600;white-space:nowrap}
+.chip.on{background:var(--pg-noir);color:#fff;border-color:var(--pg-noir)}
+:root[data-theme="dark"] .chip.on{background:#ECEDEF;color:#111214}
+
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-md);padding:10px 12px}
+.kpi .v{font:700 22px var(--font-title);font-variant-numeric:tabular-nums}
+.kpi .l{font-size:12px;color:var(--c-text-2);font-weight:600}
+.kpi.lg .v{font-size:32px}
+.kpi .v.ok{color:var(--c-success)}.kpi .v.warn{color:var(--c-warning)}.kpi .v.bad{color:var(--c-danger)}
+
+.progress{height:10px;border-radius:var(--r-pill);background:var(--c-surface-2);overflow:hidden}
+.progress>i{display:block;height:100%;background:var(--c-success);border-radius:inherit}
+.segbar{display:grid;grid-auto-flow:column;gap:3px}
+.segbar i{height:10px;border-radius:3px;background:var(--c-surface-2)}
+.segbar i.ok{background:var(--c-success)}.segbar i.cur{background:var(--c-cta)}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--c-border);border-radius:var(--r-md);background:var(--c-surface)}
+table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:620px}
+.t th{text-align:left;font:600 12px var(--font-body);text-transform:uppercase;letter-spacing:.04em;color:var(--c-text-2);background:var(--c-surface-2);padding:10px 12px;white-space:nowrap}
+.t td{padding:11px 12px;border-top:1px solid var(--c-border);vertical-align:middle}
+.t tr:hover td{background:color-mix(in srgb,var(--c-surface-2) 55%,transparent)}
+.t .num{text-align:right;font-variant-numeric:tabular-nums}
+
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--pg-graphite);color:#fff;display:grid;place-items:center;font:700 15px var(--font-title);flex:none}
+.avatar.lg{width:64px;height:64px;font-size:20px}
+
+/* Logo : image fournie si présente, sinon logotype de remplacement */
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:40px;width:auto;display:block}
+.wordmark{display:flex;align-items:center;gap:8px;font:700 15px/1 var(--font-title);letter-spacing:.14em;text-transform:uppercase}
+.wordmark small{display:block;font-size:10px;letter-spacing:.32em;color:var(--pg-rouge);margin-top:3px}
+.on-dark .wordmark small{color:#F0686D}
+.shield{width:34px;height:38px;flex:none}
+
+/* Plan temps réel */
+.plan{position:relative;border-radius:var(--r-md);overflow:hidden;background:
+  linear-gradient(var(--c-border) 1px,transparent 1px) 0 0/40px 40px,
+  linear-gradient(90deg,var(--c-border) 1px,transparent 1px) 0 0/40px 40px,var(--c-surface-2);aspect-ratio:16/10;border:1px solid var(--c-border)}
+.plan .bld{position:absolute;border:3px solid var(--c-text-2);border-radius:4px;background:color-mix(in srgb,var(--c-surface) 70%,transparent)}
+.plan .lbl{position:absolute;font:600 11px var(--font-body);color:var(--c-text-2);text-transform:uppercase;letter-spacing:.06em}
+.pin{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 12px var(--font-title);color:#fff;box-shadow:0 0 0 3px var(--c-surface),var(--sh-md)}
+.pin.ok{background:var(--c-success)}.pin.late{background:#C26A00}.pin.miss{background:var(--c-danger)}.pin.todo{background:var(--c-muted)}
+.pin.pulse::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid #C26A00;animation:pulse 1.6s infinite}
+@keyframes pulse{0%{transform:scale(.8);opacity:1}100%{transform:scale(1.5);opacity:0}}
+@media (prefers-reduced-motion:reduce){.pin.pulse::after{animation:none}}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.legend i{width:12px;height:12px;border-radius:50%;display:inline-block}
+
+/* Admin */
+.admin{display:grid;grid-template-columns:232px 1fr;min-height:640px;background:var(--c-bg)}
+.sidebar{background:var(--pg-graphite);color:#E6E8EB;padding:14px 10px;display:flex;flex-direction:column;gap:2px}
+:root[data-theme="dark"] .sidebar{background:#121417}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sidebar{background:#121417}}
+.sidebar .brand{padding:4px 8px 14px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px;color:#fff}
+.sb-group{font:600 11px var(--font-body);text-transform:uppercase;letter-spacing:.08em;color:#9BA1AB;padding:12px 10px 4px}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;color:#E6E8EB;text-decoration:none;font-size:14px;font-weight:500}
+.sb-link:hover{background:rgba(255,255,255,.07)}
+.sb-link.active{background:rgba(165,29,36,.28);color:#fff;box-shadow:inset 3px 0 0 #E5484D}
+.sb-link .cnt{margin-left:auto;background:#A51D24;color:#fff;font:700 11px/18px var(--font-body);padding:0 6px;border-radius:9px}
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{display:flex;align-items:center;gap:12px;padding:10px 20px;background:var(--c-surface);border-bottom:1px solid var(--c-border)}
+.search{flex:1;max-width:460px;display:flex;align-items:center;gap:8px;border:1px solid var(--c-border-input);border-radius:var(--r-pill);padding:7px 14px;color:var(--c-text-2);font-size:14px;background:var(--c-surface)}
+.page{padding:20px;display:flex;flex-direction:column;gap:16px}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.page-head h2{font-size:24px}
+.crumb{font-size:13px;color:var(--c-text-2);margin-bottom:4px}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.kpis.six{grid-template-columns:repeat(6,1fr)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--c-border);overflow-x:auto}
+.tabs a{padding:10px 14px;text-decoration:none;color:var(--c-text-2);font-weight:600;font-size:14px;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs a.on{color:var(--c-text);border-bottom-color:var(--c-cta)}
+.steps{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px;font-weight:600;color:var(--c-text-2)}
+.steps .s{display:flex;align-items:center;gap:6px}
+.steps .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--c-border-input);font-size:12px}
+.steps .s.on{color:var(--c-text)}.steps .s.on .n{background:var(--c-cta);border-color:var(--c-cta);color:#fff}
+.steps .s.done .n{background:var(--c-success);border-color:var(--c-success);color:#fff}
+.steps .sep{width:28px;height:2px;background:var(--c-border)}
+.dropzone{border:2px dashed var(--c-border-input);border-radius:var(--r-md);padding:24px;text-align:center;color:var(--c-text-2);background:var(--c-surface)}
+.cal{display:grid;grid-template-columns:150px repeat(7,minmax(84px,1fr));min-width:780px;font-size:13px}
+.cal>div{border-bottom:1px solid var(--c-border);border-right:1px solid var(--c-border);padding:8px;min-height:52px;background:var(--c-surface)}
+.cal .h{background:var(--c-surface-2);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--c-text-2);min-height:auto}
+.cal .who{font-weight:600}
+.shift{display:block;border-radius:6px;padding:4px 6px;font-weight:600;font-size:12px;background:var(--c-info-bg);color:var(--c-info);border-left:3px solid var(--c-info)}
+.shift.night{background:color-mix(in srgb,var(--pg-graphite) 14%,var(--c-surface));color:var(--c-text);border-left-color:var(--pg-graphite)}
+:root[data-theme="dark"] .shift.night{border-left-color:#A7ADB7}
+.shift.draft{background:repeating-linear-gradient(45deg,var(--c-surface-2) 0 6px,var(--c-surface) 6px 12px);color:var(--c-text-2);border-left-color:var(--c-muted);border-style:dashed}
+.shift.conflict{background:var(--c-warning-bg);color:var(--c-warning);border-left-color:var(--c-warning)}
+.cal .gap{background:var(--c-danger-bg)}
+.meter{display:flex;align-items:center;gap:8px}
+.meter .progress{flex:1;min-width:80px}
+
+/* Borne */
+.borne{background:#0B0C0E;color:#ECEDEF;padding:24px 32px;min-height:560px;display:flex;flex-direction:column;gap:20px}
+.borne-grid{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;flex:1}
+.qr-card{background:#fff;padding:20px;border-radius:18px;box-shadow:0 0 0 6px rgba(165,29,36,.6)}
+.qr-card svg{display:block;width:300px;height:300px}
+.clock{font:700 72px/1 var(--font-title);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.countdown{height:8px;background:#22252B;border-radius:4px;overflow:hidden;margin-top:14px;width:340px}
+.countdown i{display:block;height:100%;width:62%;background:#C42A31}
+
+/* Scanner */
+.scanner{flex:1;background:#000;position:relative;display:grid;place-items:center;overflow:hidden}
+.scanner .cam{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 35%,#3a3f47 0%,#15171a 55%,#060708 100%)}
+.scanner .reticle{position:relative;width:240px;height:240px;border-radius:18px;box-shadow:0 0 0 2000px rgba(0,0,0,.55)}
+.scanner .reticle::before{content:"";position:absolute;inset:-3px;border-radius:20px;background:
+  linear-gradient(#fff,#fff) top left/36px 4px no-repeat,linear-gradient(#fff,#fff) top left/4px 36px no-repeat,
+  linear-gradient(#fff,#fff) top right/36px 4px no-repeat,linear-gradient(#fff,#fff) top right/4px 36px no-repeat,
+  linear-gradient(#fff,#fff) bottom left/36px 4px no-repeat,linear-gradient(#fff,#fff) bottom left/4px 36px no-repeat,
+  linear-gradient(#fff,#fff) bottom right/36px 4px no-repeat,linear-gradient(#fff,#fff) bottom right/4px 36px no-repeat}
+.scanner .laser{position:absolute;left:12px;right:12px;top:50%;height:2px;background:#E5484D;box-shadow:0 0 12px #E5484D}
+.scanner .ghost-qr{position:absolute;inset:40px;opacity:.35}
+.scan-foot{background:#0B0C0E;color:#ECEDEF;padding:16px;display:flex;flex-direction:column;gap:10px}
+
+.confirm{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;background:var(--c-success);color:#fff}
+.confirm .big{width:104px;height:104px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;margin-bottom:8px}
+.confirm h3{font-size:24px;text-transform:uppercase;letter-spacing:.04em}
+.confirm .time{font:700 56px/1 var(--font-title);font-variant-numeric:tabular-nums}
+:root[data-theme="dark"] .confirm{background:#12291D;color:#ECEDEF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .confirm{background:#12291D;color:#ECEDEF}}
+
+.status-card{background:var(--pg-noir);color:#fff;border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;gap:6px;border:1px solid #2B2F36}
+.status-card .st{display:inline-flex;align-items:center;gap:8px;font:700 12px var(--font-body);letter-spacing:.08em;text-transform:uppercase}
+.status-card .st i{width:10px;height:10px;border-radius:50%;background:#4CC38A;box-shadow:0 0 0 4px rgba(76,195,138,.25)}
+.status-card .st.off i{background:#9AA1AC;box-shadow:none}
+.status-card h4{font-size:20px}
+.status-card .sub{color:#A7ADB7;font-size:14px}
+
+.otp{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.otp span{height:56px;border:1px solid var(--c-border-input);border-radius:var(--r-sm);display:grid;place-items:center;font:700 24px var(--font-title);background:var(--c-surface)}
+.otp span.cur{border:2px solid var(--c-focus)}
+
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--c-surface);border-radius:20px 20px 0 0;box-shadow:var(--sh-lg);padding:8px 16px 20px;max-height:86%;overflow:auto}
+.sheet .grab{width:44px;height:5px;border-radius:3px;background:var(--c-border);margin:4px auto 12px}
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.sev{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.sev label{border:1px solid var(--c-border-input);border-radius:var(--r-sm);padding:10px 4px;text-align:center;font-size:13px;font-weight:600;cursor:pointer}
+.sev label.on{border:2px solid var(--c-warning);background:var(--c-warning-bg);color:var(--c-warning)}
+.photos{display:flex;gap:8px}
+.photos span{width:72px;height:72px;border-radius:var(--r-sm);background:linear-gradient(135deg,#59606b,#2b2f36);display:grid;place-items:center;color:#fff}
+.photos span.add{background:var(--c-surface-2);color:var(--c-text-2);border:1px dashed var(--c-border-input)}
+
+.day{display:grid;grid-template-columns:54px 1fr;gap:12px;padding:12px 14px;border-bottom:1px solid var(--c-border);background:var(--c-surface)}
+.day:last-child{border-bottom:0}
+.day .d{font:700 13px var(--font-title);text-transform:uppercase;color:var(--c-text-2);line-height:1.2}
+.day .d b{display:block;font-size:22px;color:var(--c-text)}
+.day.today{background:var(--pg-rouge-voile)}
+.day .slot{border-left:3px solid var(--pg-graphite);padding-left:10px}
+:root[data-theme="dark"] .day .slot{border-left-color:#A7ADB7}
+
+.msg{border-radius:var(--r-md);padding:10px 12px;font-size:14px;max-width:85%}
+.msg.me{background:var(--pg-rouge-voile);align-self:flex-end}
+.msg.them{background:var(--c-surface-2)}
+
+.pdf-preview{border:1px solid var(--c-border);border-radius:var(--r-md);background:var(--c-surface);padding:16px;display:flex;flex-direction:column;gap:6px}
+.pdf-preview i{display:block;height:8px;border-radius:4px;background:var(--c-surface-2)}
+
+.flux{display:flex;flex-direction:column}
+.flux .ev{display:grid;grid-template-columns:50px 1fr;gap:8px;padding:9px 0;border-bottom:1px solid var(--c-border);font-size:13px}
+.flux .ev:last-child{border-bottom:0}
+
+.site-card{display:flex;flex-direction:column;gap:10px}
+
+/* Badge NFC : borne PIN et carte */
+.borne-grid.pin-layout{grid-template-columns:1fr auto}
+.pinpad{display:grid;grid-template-columns:repeat(3,76px);gap:10px}
+.pinpad button{height:68px;border-radius:14px;border:1px solid #30343B;background:#17191D;color:#ECEDEF;font:700 26px var(--font-title);cursor:pointer}
+.pinpad button.ok{background:#C42A31;border-color:#C42A31}
+.pindots{display:flex;gap:16px;margin:18px 0}
+.pindots i{width:20px;height:20px;border-radius:50%;border:2px solid #A7ADB7;display:block}
+.pindots i.on{background:#ECEDEF;border-color:#ECEDEF}
+.nfc-hint{display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:10px 16px;border-radius:999px;border:1px dashed #6B727D;color:#ECEDEF;font-weight:600}
+.idcard{width:256px;height:162px;border-radius:12px;background:#fff;color:#111214;box-shadow:var(--sh-md);border:1px solid #D5D9DF;overflow:hidden;position:relative;font-size:11px;flex:none}
+.idcard .band{height:30px;background:#111214;color:#fff;display:flex;align-items:center;gap:6px;padding:0 10px;font:700 11px var(--font-title);letter-spacing:.12em;border-bottom:3px solid #A51D24}
+.idcard .body{display:flex;gap:10px;padding:10px}
+.idcard .ph{width:62px;height:78px;border-radius:6px;background:linear-gradient(160deg,#8A919C,#2B2F36);flex:none}
+.idcard .nm{font:700 13px var(--font-title)}
+.idcard .lbl{color:#5A606B;font-size:9px;text-transform:uppercase;letter-spacing:.06em}
+.idcard .nfc{position:absolute;right:10px;bottom:8px;color:#A51D24}
+
+/* =====================================================================
+   RESPONSIVE
+   ===================================================================== */
+@media (max-width:1100px){
+  .kpis.six{grid-template-columns:repeat(3,1fr)}
+  .grid-3{grid-template-columns:1fr 1fr}
+}
+@media (max-width:900px){
+  .admin{grid-template-columns:1fr}
+  .sidebar{flex-direction:row;overflow-x:auto;padding:8px;gap:4px;align-items:center}
+  .sidebar .brand{border:0;margin:0;padding:0 8px 0 4px}
+  .sb-group{display:none}
+  .sb-link{white-space:nowrap;padding:8px 10px}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .borne-grid{grid-template-columns:1fr;justify-items:center;text-align:center;gap:20px}
+  .countdown{margin-inline:auto;width:100%;max-width:340px}
+  .clock{font-size:56px}
+  .borne-grid.pin-layout{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .doc-main{padding:16px 12px 64px}
+  .screens{grid-template-columns:minmax(0,1fr)}
+  .phone{border-width:6px;border-radius:28px;height:740px}
+  .kpis.six{grid-template-columns:repeat(2,1fr)}
+  .topbar .search{display:none}
+  .page{padding:14px}
+  .qr-card svg{width:220px;height:220px}
+  .borne{padding:18px}
+  .tablet{border-width:8px;border-radius:18px}
+  .pinpad{grid-template-columns:repeat(3,64px)}
+  .pinpad button{height:58px}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+    <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h8.5a3.5 3.5 0 0 0 0-7h-9a3.5 3.5 0 0 1 0-7H16"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"/><path d="M21 3v5h-5"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h2l2-3h6l2 3h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-torch" viewBox="0 0 24 24"><path d="M8 2h8v4l-2 4v12h-4V10L8 6z"/><path d="M12 13v2"/></symbol>
+    <symbol id="i-euro" viewBox="0 0 24 24"><path d="M18 7a7 7 0 1 0 0 10"/><path d="M4 10h10M4 14h10"/></symbol>
+    <symbol id="i-sync" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5.3L4 15"/><path d="M4 20v-5h5"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M22 20a7 7 0 0 0-4-6.3"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><path d="m21 11-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2L9.8 17a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/></symbol>
+    <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 2v10M18.4 6.6a9 9 0 1 1-12.8 0"/></symbol>
+    <symbol id="i-nfc" viewBox="0 0 24 24"><path d="M6 8.5a6 6 0 0 1 0 7"/><path d="M9.5 6a10 10 0 0 1 0 12"/><path d="M13 3.5a14 14 0 0 1 0 17"/><path d="M16.5 2a17 17 0 0 1 0 20"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+    <symbol id="i-logo-shield" viewBox="0 0 34 38"><path d="M17 1.5C10 3.3 4.6 6 1.6 9.4c-.5 9.6 3.5 20.4 15.4 27 11.9-6.6 15.9-17.4 15.4-27C29.4 6 24 3.3 17 1.5z" fill="#111214" stroke="#fff" stroke-width="1.5"/><path d="M17 6c-5 1.4-9 3.3-11.4 5.7.1 7.4 3.4 15.6 11.4 20.6 8-5 11.3-13.2 11.4-20.6C26 9.3 22 7.4 17 6z" fill="#A51D24"/><path d="M12 22c2-4 5-6 9-7-2 2-3 5-3 9" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="doc-header">
+  <div class="inner">
+    <h1>Pegasus Connect — maquettes</h1>
+    <nav aria-label="Sections des maquettes">
+      <a href="#agent">Agent (mobile)</a>
+      <a href="#borne">Borne</a>
+      <a href="#admin">Administration</a>
+      <a href="#client">Portail client</a>
+    </nav>
+    <button class="theme-toggle" type="button" id="themeToggle" aria-pressed="false">Thème : auto</button>
+  </div>
+</header>
+
+<main class="doc-main">
+  <div class="doc-intro">
+    <h2>Maquettes haute fidélité</h2>
+    <p class="muted">Écrans de référence de la plateforme employés Pegasus Insure, conformes à la charte graphique du cahier des charges (§ 7). Les données sont fictives. Pour afficher le logo officiel, placez le fichier <span class="mono">logo-pegasus-insure.png</span> à côté de ce fichier HTML. Le bouton « Thème » bascule entre clair, sombre et automatique.</p>
+  </div>
+
+<!-- ================================================================
+     AGENT — MOBILE
+     ================================================================ -->
+<section class="doc-section" id="agent" aria-labelledby="h-agent">
+  <h2 id="h-agent"><span class="tag">Agent</span> Application mobile (PWA)</h2>
+  <div class="screens">
+
+    <!-- A1 Connexion -->
+    <figure class="screen" id="a1">
+      <figcaption><span class="code">A1</span> Connexion</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>21:58</span><span>4G ▮▮▮ 82 %</span></div>
+        <div class="ph-body pad" style="justify-content:center;gap:20px;background:var(--c-surface)">
+          <div class="center stack" style="align-items:center;gap:6px">
+            <img class="logo-img" src="logo-pegasus-insure.png" alt="Pegasus Insure" hidden style="width:150px;height:150px;object-fit:contain">
+            <span class="logo-fallback stack" style="align-items:center;gap:8px">
+              <svg width="68" height="76" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg>
+              <span class="wordmark" style="flex-direction:column;font-size:20px">Pegasus<small>Insure</small></span>
+            </span>
+            <p class="muted strong" style="margin-top:6px">Espace collaborateurs</p>
+          </div>
+          <form class="stack" onsubmit="return false">
+            <div class="field"><label for="a1e">Adresse e-mail</label><input class="input" id="a1e" type="email" value="karim.benali@pegasus-insure.fr" autocomplete="username"></div>
+            <div class="field"><label for="a1p">Mot de passe</label><input class="input" id="a1p" type="password" value="••••••••••••" autocomplete="current-password"></div>
+            <label class="check"><input type="checkbox" checked> Rester connecté sur cet appareil</label>
+            <button class="btn btn-primary block" type="submit">Se connecter</button>
+            <a href="#a1" class="center small">Mot de passe oublié ?</a>
+          </form>
+          <div class="banner info" style="margin-top:auto"><svg class="icon"><use href="#i-phone"/></svg><span><b>Urgence opérationnelle</b><br><span class="t">Permanence 24/7 : 04 00 00 00 00</span></span></div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- A2 2FA -->
+    <figure class="screen" id="a2">
+      <figcaption><span class="code">A2</span> Double authentification</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>21:59</span><span>4G ▮▮▮ 82 %</span></div>
+        <div class="app-bar"><button class="ib" aria-label="Retour"><svg class="icon"><use href="#i-back"/></svg></button><h3>Vérification</h3></div>
+        <div class="ph-body pad" style="gap:18px">
+          <div class="center stack" style="align-items:center">
+            <div class="li" style="border:0;padding:0;min-height:auto"><span class="ico brand" style="width:56px;height:56px;border-radius:50%"><svg class="icon lg"><use href="#i-lock"/></svg></span></div>
+            <h3 style="font-size:20px">Code de sécurité</h3>
+            <p class="muted">Saisissez le code à 6 chiffres affiché dans votre application d'authentification.</p>
+          </div>
+          <div class="otp" aria-label="Code à 6 chiffres"><span>4</span><span>8</span><span>2</span><span>9</span><span>1</span><span class="cur"></span></div>
+          <label class="check"><input type="checkbox" checked> Faire confiance à cet appareil pendant 30 jours</label>
+          <button class="btn btn-primary block">Valider</button>
+          <button class="btn btn-ghost">Utiliser un code de secours</button>
+          <p class="help center" style="margin-top:auto">5 essais maximum. Compte verrouillé 15 min au-delà.</p>
+        </div>
+      </div>
+    </figure>
+
+    <!-- A3 Accueil -->
+    <figure class="screen" id="a3">
+      <figcaption><span class="code">A3</span> Accueil — bouton « Pointer »</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>20:47</span><span>4G ▮▮▮ 76 %</span></div>
+        <div class="app-bar on-dark">
+          <svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg>
+          <h3>Bonjour Karim</h3>
+          <button class="ib" aria-label="Notifications, 2 non lues"><svg class="icon"><use href="#i-bell"/></svg><span class="dot">2</span></button>
+        </div>
+        <div class="ph-body">
+          <div class="content">
+            <div class="status-card">
+              <span class="st off"><i></i> Hors service</span>
+              <span class="sub">Prochaine vacation</span>
+              <h4>Ce soir · 21:00 → 07:00</h4>
+              <span class="row sub"><svg class="icon sm"><use href="#i-pin"/></svg> Entrepôt Logista — Nice Ouest</span>
+            </div>
+            <button class="btn btn-primary btn-xl block"><svg class="icon lg"><use href="#i-qr"/></svg> Pointer mon arrivée</button>
+            <div class="list">
+              <div class="li"><span class="ico" style="background:var(--c-warning-bg);color:var(--c-warning)"><svg class="icon"><use href="#i-alert"/></svg></span><div class="grow"><div class="t1">Carte professionnelle</div><div class="t2">Expire dans 24 jours · le 27/03/2027</div></div><svg class="icon muted"><use href="#i-next"/></svg></div>
+              <div class="li"><span class="ico brand"><svg class="icon"><use href="#i-file"/></svg></span><div class="grow"><div class="t1">1 document à lire</div><div class="t2">Note de service 2027-03 — tenue</div></div><span class="badge b-brand">À lire</span></div>
+              <div class="li"><span class="ico" style="background:var(--c-success-bg);color:var(--c-success)"><svg class="icon"><use href="#i-euro"/></svg></span><div class="grow"><div class="t1">Fiche de paie disponible</div><div class="t2">Février 2027</div></div><span class="badge b-success">Nouveau</span></div>
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-sync"/></svg></span><div class="grow"><div class="t1">Synchronisation</div><div class="t2">Tous vos pointages sont transmis</div></div><svg class="icon" style="color:var(--c-success)"><use href="#i-check"/></svg></div>
+            </div>
+          </div>
+        </div>
+        <nav class="tabbar" aria-label="Navigation principale">
+          <a class="tab active" href="#a3" aria-current="page"><svg class="icon"><use href="#i-home"/></svg>Accueil</a>
+          <a class="tab" href="#a12"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="tab center" href="#a4"><span class="disc"><svg class="icon lg"><use href="#i-qr"/></svg></span>Pointer</a>
+          <a class="tab" href="#a10"><svg class="icon"><use href="#i-file"/></svg>Documents</a>
+          <a class="tab" href="#a9"><svg class="icon"><use href="#i-menu"/></svg>Plus</a>
+        </nav>
+      </div>
+    </figure>
+
+    <!-- A3b Accueil en service -->
+    <figure class="screen" id="a3b">
+      <figcaption><span class="code">A3b</span> Accueil — en service, ronde due</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>21:58</span><span>4G ▮▮ 71 %</span></div>
+        <div class="app-bar on-dark">
+          <svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg>
+          <h3>Bonjour Karim</h3>
+          <button class="ib" aria-label="Notifications"><svg class="icon"><use href="#i-bell"/></svg></button>
+        </div>
+        <div class="ph-body">
+          <div class="content">
+            <div class="status-card">
+              <span class="st"><i></i> En service</span>
+              <h4>Depuis 21:02 · <span class="tnum">0 h 56</span></h4>
+              <span class="row sub"><svg class="icon sm"><use href="#i-pin"/></svg> Entrepôt Logista — Nice Ouest</span>
+              <span class="sub">Fin prévue 07:00</span>
+            </div>
+            <div class="card" style="border-color:var(--c-cta)">
+              <div class="row between"><h4 style="margin:0">Ronde de 22:00</h4><span class="badge b-info">Dans 2 min</span></div>
+              <p class="muted small" style="margin:4px 0 12px">10 points · durée max 45 min</p>
+              <button class="btn btn-dark block"><svg class="icon"><use href="#i-route"/></svg> Démarrer la ronde</button>
+            </div>
+            <button class="btn btn-outline btn-xl block" style="font-size:16px"><svg class="icon lg"><use href="#i-qr"/></svg> Pointer mon départ</button>
+            <div class="banner warning"><svg class="icon"><use href="#i-sync"/></svg><span><b>Hors ligne</b> · <span class="t">1 pointage en attente, il sera transmis automatiquement.</span></span></div>
+          </div>
+        </div>
+        <nav class="tabbar" aria-label="Navigation principale">
+          <a class="tab active" href="#a3b" aria-current="page"><svg class="icon"><use href="#i-home"/></svg>Accueil</a>
+          <a class="tab" href="#a12"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="tab center" href="#a4"><span class="disc"><svg class="icon lg"><use href="#i-qr"/></svg></span>Pointer</a>
+          <a class="tab" href="#a10"><svg class="icon"><use href="#i-file"/></svg>Documents</a>
+          <a class="tab" href="#a9"><svg class="icon"><use href="#i-menu"/></svg>Plus</a>
+        </nav>
+      </div>
+    </figure>
+
+    <!-- A4 Scan -->
+    <figure class="screen" id="a4">
+      <figcaption><span class="code">A4</span> Scan du QR de la borne</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>21:02</span><span>4G ▮▮▮ 76 %</span></div>
+        <div class="app-bar"><button class="ib" aria-label="Fermer"><svg class="icon"><use href="#i-x"/></svg></button><h3>Pointage</h3><button class="ib" aria-label="Lampe torche"><svg class="icon"><use href="#i-torch"/></svg></button></div>
+        <div class="scanner">
+          <div class="cam"></div>
+          <div class="reticle"><svg class="ghost-qr qr-gen" data-seed="7" viewBox="0 0 29 29" aria-hidden="true"></svg><span class="laser"></span></div>
+        </div>
+        <div class="scan-foot">
+          <p class="center strong">Visez le QR code affiché sur la borne du poste de sécurité.</p>
+          <div class="row" style="justify-content:center;color:#4CC38A;font-size:14px"><svg class="icon sm"><use href="#i-pin"/></svg> Position obtenue · précision 12 m</div>
+          <p class="center xs" style="color:#A7ADB7">Votre position est relevée uniquement au moment du scan.</p>
+        </div>
+      </div>
+    </figure>
+
+    <!-- A5 Confirmation -->
+    <figure class="screen" id="a5">
+      <figcaption><span class="code">A5</span> Confirmation de pointage</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>21:02</span><span>4G ▮▮▮ 76 %</span></div>
+        <div class="confirm" role="status" aria-live="polite">
+          <span class="big"><svg class="icon" style="width:56px;height:56px;stroke-width:2.5"><use href="#i-check"/></svg></span>
+          <h3>Arrivée enregistrée</h3>
+          <p class="strong">Entrepôt Logista — Nice Ouest</p>
+          <p>Mercredi 3 mars 2027</p>
+          <p class="time">21:02</p>
+          <p style="opacity:.9;font-size:14px">Vacation 21:00 → 07:00 · retard 2 min (toléré)</p>
+        </div>
+        <div style="padding:16px;background:var(--c-surface);display:flex;flex-direction:column;gap:8px">
+          <button class="btn btn-dark block">Retour à l'accueil</button>
+          <button class="btn btn-ghost">Erreur ? Annuler ce pointage (1:52)</button>
+        </div>
+      </div>
+    </figure>
+
+    <!-- A5b Confirmation à vérifier -->
+    <figure class="screen" id="a5b">
+      <figcaption><span class="code">A5b</span> Pointage enregistré « à vérifier »</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>18:01</span><span>4G ▮ 54 %</span></div>
+        <div class="confirm" style="background:var(--c-warning-bg);color:var(--c-warning)" role="status">
+          <span class="big" style="background:color-mix(in srgb,var(--c-warning) 15%,transparent)"><svg class="icon" style="width:52px;height:52px"><use href="#i-alert"/></svg></span>
+          <h3>Arrivée enregistrée</h3>
+          <p class="strong" style="color:var(--c-text)">Port Lympia — Capitainerie</p>
+          <p class="time" style="color:var(--c-text)">18:01</p>
+          <div class="banner warning" style="text-align:left;background:var(--c-surface)"><svg class="icon"><use href="#i-pin"/></svg><span><b>À vérifier</b><br><span class="t">Votre position semble hors du périmètre du site (420 m). Votre chef d'équipe validera ce pointage. Vous n'avez rien à faire.</span></span></div>
+        </div>
+        <div style="padding:16px;background:var(--c-surface)"><button class="btn btn-dark block">Retour à l'accueil</button></div>
+      </div>
+    </figure>
+
+    <!-- A6 Ronde -->
+    <figure class="screen" id="a6">
+      <figcaption><span class="code">A6</span> Ronde en cours</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>22:21</span><span>4G ▮▮ 70 %</span></div>
+        <div class="app-bar"><button class="ib" aria-label="Retour"><svg class="icon"><use href="#i-back"/></svg></button><h3>Ronde 22:00 · Logista</h3></div>
+        <div class="ph-body">
+          <div class="content" style="padding-bottom:0">
+            <div class="card">
+              <div class="row between"><span class="strong" style="font:700 28px var(--font-title)">7 <span class="muted" style="font-size:18px">/ 10</span></span><span class="badge b-info">En cours</span></div>
+              <div class="segbar" style="margin:10px 0 8px"><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="cur"></i><i></i><i></i></div>
+              <p class="small muted">Démarrée à 22:03 · <span class="tnum">18 min</span> écoulées · max 45 min</p>
+            </div>
+            <div class="list">
+              <div class="li"><span class="badge b-success" style="padding:5px">✓</span><div class="grow"><div class="t1">1 · Accueil principal</div><div class="t2">RDC</div></div><span class="small tnum muted">22:04</span></div>
+              <div class="li"><span class="badge b-success" style="padding:5px">✓</span><div class="grow"><div class="t1">6 · Parking extérieur</div><div class="t2">Extérieur</div></div><span class="small tnum muted">22:15</span></div>
+              <div class="li"><span class="badge b-success" style="padding:5px">✓</span><div class="grow"><div class="t1">7 · Local TGBT</div><div class="t2">Sous-sol</div></div><span class="small tnum muted">22:19</span></div>
+              <div class="li" style="background:var(--pg-rouge-voile)"><span class="badge b-brand" style="padding:5px">→</span><div class="grow"><div class="t1">8 · Issue de secours Nord</div><div class="t2">Point suivant</div></div></div>
+              <div class="li"><span class="badge b-muted" style="padding:5px">○</span><div class="grow"><div class="t1">9 · Parking niveau -1</div></div></div>
+              <div class="li"><span class="badge b-muted" style="padding:5px">○</span><div class="grow"><div class="t1">10 · Toiture (accès échelle)</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:12px 16px;background:var(--c-surface);border-top:1px solid var(--c-border);display:grid;grid-template-columns:1fr auto;gap:8px">
+          <button class="btn btn-primary"><svg class="icon"><use href="#i-qr"/></svg> Scanner le point</button>
+          <button class="btn btn-outline" aria-label="Signaler une anomalie"><svg class="icon" style="color:var(--c-warning)"><use href="#i-alert"/></svg> Signaler</button>
+          <button class="btn btn-ghost" style="grid-column:1/-1">Clôturer la ronde</button>
+        </div>
+      </div>
+    </figure>
+
+    <!-- A7 Anomalie -->
+    <figure class="screen" id="a7">
+      <figcaption><span class="code">A7</span> Signalement d'anomalie</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>22:24</span><span>4G ▮▮ 69 %</span></div>
+        <div class="app-bar"><h3>Ronde 22:00 · Logista</h3></div>
+        <div class="ph-body" style="position:relative">
+          <div class="overlay"></div>
+          <form class="sheet stack" onsubmit="return false" aria-label="Signaler une anomalie">
+            <div class="grab"></div>
+            <div class="row between"><h3 style="font-size:18px">Signaler une anomalie</h3><button class="btn btn-ghost sm" type="button" aria-label="Fermer"><svg class="icon"><use href="#i-x"/></svg></button></div>
+            <p class="small muted">Point : <b style="color:var(--c-text)">8 · Issue de secours Nord</b></p>
+            <div class="field"><label>Catégorie</label><select class="select"><option>Accès ouvert</option></select></div>
+            <fieldset class="field" style="border:0;padding:0;margin:0"><legend class="strong small" style="margin-bottom:6px">Gravité</legend>
+              <div class="sev"><label>Info</label><label>Mineure</label><label class="on">Majeure</label><label>Critique</label></div>
+            </fieldset>
+            <div class="field"><label>Description</label><textarea class="textarea">Porte trouvée entrouverte, gâche endommagée. Porte refermée et calée, aucune intrusion constatée.</textarea></div>
+            <div class="field"><label>Photos (3 max)</label><div class="photos"><span class="add"><svg class="icon"><use href="#i-camera"/></svg></span><span><svg class="icon"><use href="#i-camera"/></svg></span><span><svg class="icon"><use href="#i-camera"/></svg></span></div></div>
+            <label class="check"><input type="checkbox" checked> Visible par le client</label>
+            <button class="btn btn-primary block" type="submit">Envoyer le signalement</button>
+          </form>
+        </div>
+      </div>
+    </figure>
+
+    <!-- A8 Historique -->
+    <figure class="screen" id="a8">
+      <figcaption><span class="code">A8</span> Historique et heures du mois</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>10:12</span><span>Wi-Fi 88 %</span></div>
+        <div class="app-bar"><button class="ib" aria-label="Retour"><svg class="icon"><use href="#i-back"/></svg></button><h3>Mes heures</h3></div>
+        <div class="ph-body">
+          <div class="content">
+            <div class="row between"><button class="btn btn-outline sm" aria-label="Mois précédent"><svg class="icon sm"><use href="#i-back"/></svg></button><strong style="font:600 17px var(--font-title)">Février 2027</strong><button class="btn btn-outline sm" aria-label="Mois suivant"><svg class="icon sm"><use href="#i-next"/></svg></button></div>
+            <div class="kpis">
+              <div class="kpi"><div class="v">142,5</div><div class="l">h pointées</div></div>
+              <div class="kpi"><div class="v">144</div><div class="l">h prévues</div></div>
+              <div class="kpi"><div class="v warn">−1,5</div><div class="l">Écart</div></div>
+            </div>
+            <p class="small muted">Nuit 96 h · Dimanche 24 h · Férié 0 h <span class="xs">(indicatif)</span></p>
+            <div class="list">
+              <div class="li"><div class="grow"><div class="t1">Jeu 25 · Logista</div><div class="t2 tnum">21:02 → 07:01 · 9 h 59</div></div><span class="badge b-success">Validé</span></div>
+              <div class="li"><div class="grow"><div class="t1">Mer 24 · Logista</div><div class="t2 tnum">20:58 → 07:00 · 10 h 02</div></div><span class="badge b-success">Validé</span></div>
+              <div class="li"><div class="grow"><div class="t1">Dim 21 · Port Lympia</div><div class="t2 tnum">07:15 → 19:00 · 11 h 45</div></div><span class="badge b-warning">Retard 15 min</span></div>
+              <div class="li"><div class="grow"><div class="t1">Sam 20 · Port Lympia</div><div class="t2 tnum">18:01 → 06:02 · 12 h 01</div></div><span class="badge b-info">À vérifier</span></div>
+              <div class="li"><div class="grow"><div class="t1">Mer 17 · Logista</div><div class="t2 tnum">21:00 → 07:00 · 10 h 00</div></div><span class="badge b-muted">Corrigé</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- A9 Profil -->
+    <figure class="screen" id="a9">
+      <figcaption><span class="code">A9</span> Mon profil</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>10:14</span><span>Wi-Fi 88 %</span></div>
+        <div class="app-bar"><button class="ib" aria-label="Retour"><svg class="icon"><use href="#i-back"/></svg></button><h3>Mon profil</h3></div>
+        <div class="ph-body">
+          <div class="content">
+            <div class="row" style="gap:14px"><span class="avatar lg">KB</span><div><h3 style="font-size:19px">Karim BENALI</h3><p class="muted small">Agent de sécurité · ADS</p><p class="mono small">PGS-0042</p></div></div>
+            <div class="list">
+              <div class="li"><div class="grow"><div class="t2">Date et lieu de naissance</div><div class="t1">14/05/1990 · Marseille</div></div></div>
+              <div class="li"><div class="grow"><div class="t2">Adresse</div><div class="t1">12 rue Vernier, 06000 Nice</div></div></div>
+              <div class="li"><div class="grow"><div class="t2">N° de sécurité sociale</div><div class="t1 mono">1 •• •• •• ••• ••• 42</div></div><svg class="icon muted" aria-label="Donnée chiffrée"><use href="#i-lock"/></svg></div>
+              <div class="li"><div class="grow"><div class="t2">Contrat</div><div class="t1">CDI · temps plein · depuis le 12/09/2022</div></div></div>
+            </div>
+            <div class="list-head">Conformité</div>
+            <div class="list">
+              <div class="li"><div class="grow"><div class="t1">Carte pro CNAPS</div><div class="t2 mono">CAR-006-2029-03-27-…</div></div><span class="badge b-warning">24 j</span></div>
+              <div class="li"><div class="grow"><div class="t1">SST</div><div class="t2">Recyclage 11/2027</div></div><span class="badge b-success">Valide</span></div>
+              <div class="li"><div class="grow"><div class="t1">SSIAP 1</div><div class="t2">Recyclage 05/2028</div></div><span class="badge b-success">Valide</span></div>
+            </div>
+            <button class="btn btn-outline block"><svg class="icon"><use href="#i-edit"/></svg> Demander une modification</button>
+          </div>
+        </div>
+        <nav class="tabbar" aria-label="Navigation principale">
+          <a class="tab" href="#a3"><svg class="icon"><use href="#i-home"/></svg>Accueil</a>
+          <a class="tab" href="#a12"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="tab center" href="#a4"><span class="disc"><svg class="icon lg"><use href="#i-qr"/></svg></span>Pointer</a>
+          <a class="tab" href="#a10"><svg class="icon"><use href="#i-file"/></svg>Documents</a>
+          <a class="tab active" href="#a9" aria-current="page"><svg class="icon"><use href="#i-menu"/></svg>Plus</a>
+        </nav>
+      </div>
+    </figure>
+
+    <!-- A10 Documents -->
+    <figure class="screen" id="a10">
+      <figcaption><span class="code">A10</span> Mes documents personnels</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>10:15</span><span>Wi-Fi 88 %</span></div>
+        <div class="app-bar"><h3>Mes documents</h3></div>
+        <div class="ph-body">
+          <div class="content">
+            <div class="chips"><span class="chip on">Tous</span><span class="chip">Contrat</span><span class="chip">Diplômes</span><span class="chip">Carte pro</span><span class="chip">Attestations</span></div>
+            <div class="list">
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-file"/></svg></span><div class="grow"><div class="t1">Contrat de travail CDI</div><div class="t2">PDF · 12/09/2022</div></div><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-file"/></svg></span><div class="grow"><div class="t1">Avenant n°2 — temps plein</div><div class="t2">PDF · 01/03/2024</div></div><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-shield"/></svg></span><div class="grow"><div class="t1">Diplôme SSIAP 1</div><div class="t2">PDF · valide jusqu'au 05/2028</div></div><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-shield"/></svg></span><div class="grow"><div class="t1">Certificat SST</div><div class="t2">PDF · recyclage 11/2027</div></div><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-user"/></svg></span><div class="grow"><div class="t1">Carte professionnelle (recto/verso)</div><div class="t2">JPG · expire le 27/03/2027</div></div><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-chart"/></svg></span><div class="grow"><div class="t1">Rapport d'activité — janvier 2027</div><div class="t2">PDF · envoyé par RH</div></div><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+            </div>
+          </div>
+        </div>
+        <nav class="tabbar" aria-label="Navigation principale">
+          <a class="tab" href="#a3"><svg class="icon"><use href="#i-home"/></svg>Accueil</a>
+          <a class="tab" href="#a12"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="tab center" href="#a4"><span class="disc"><svg class="icon lg"><use href="#i-qr"/></svg></span>Pointer</a>
+          <a class="tab active" href="#a10" aria-current="page"><svg class="icon"><use href="#i-file"/></svg>Documents</a>
+          <a class="tab" href="#a9"><svg class="icon"><use href="#i-menu"/></svg>Plus</a>
+        </nav>
+      </div>
+    </figure>
+
+    <!-- A11 Paie -->
+    <figure class="screen" id="a11">
+      <figcaption><span class="code">A11</span> Mes fiches de paie</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>10:16</span><span>Wi-Fi 88 %</span></div>
+        <div class="app-bar"><button class="ib" aria-label="Retour"><svg class="icon"><use href="#i-back"/></svg></button><h3>Fiches de paie</h3></div>
+        <div class="ph-body">
+          <div class="content">
+            <div class="seg" role="tablist"><button class="on">2027</button><button>2026</button><button>2025</button></div>
+            <div class="list">
+              <div class="li"><span class="ico brand"><svg class="icon"><use href="#i-euro"/></svg></span><div class="grow"><div class="t1">Février 2027</div><div class="t2">Publiée le 01/03/2027</div></div><span class="badge b-success">Nouveau</span><button class="btn btn-ghost sm" aria-label="Télécharger février 2027"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-euro"/></svg></span><div class="grow"><div class="t1">Janvier 2027</div><div class="t2">Publiée le 01/02/2027</div></div><button class="btn btn-ghost sm" aria-label="Télécharger janvier 2027"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+            </div>
+            <div class="list-head">2026</div>
+            <div class="list">
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-euro"/></svg></span><div class="grow"><div class="t1">Décembre 2026</div></div><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-euro"/></svg></span><div class="grow"><div class="t1">Novembre 2026</div></div><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+              <div class="li"><span class="ico"><svg class="icon"><use href="#i-euro"/></svg></span><div class="grow"><div class="t1">Octobre 2026</div></div><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon"><use href="#i-dl"/></svg></button></div>
+            </div>
+            <p class="help">Les téléchargements sont sécurisés et tracés. Une question ? <a href="#a14">Contacter le service paie</a>.</p>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- A12 Planning -->
+    <figure class="screen" id="a12">
+      <figcaption><span class="code">A12</span> Mon planning — semaine</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>10:18</span><span>Wi-Fi 88 %</span></div>
+        <div class="app-bar"><h3>Planning</h3></div>
+        <div class="ph-body">
+          <div class="content" style="gap:10px">
+            <div class="row between"><div class="seg"><button class="on">Semaine</button><button>Mois</button></div><div class="row"><button class="btn btn-outline sm" aria-label="Semaine précédente"><svg class="icon sm"><use href="#i-back"/></svg></button><button class="btn btn-outline sm" aria-label="Semaine suivante"><svg class="icon sm"><use href="#i-next"/></svg></button></div></div>
+            <p class="strong">Semaine 9 · 1 → 7 mars 2027</p>
+            <div class="banner info"><svg class="icon"><use href="#i-refresh"/></svg><span class="t">Planning modifié le 01/03 à 14:10 : samedi 6 ajouté.</span></div>
+            <div class="list">
+              <div class="day"><div class="d">Lun<b>1</b></div><div class="muted" style="align-self:center">Repos</div></div>
+              <div class="day"><div class="d">Mar<b>2</b></div><div class="muted" style="align-self:center">Repos</div></div>
+              <div class="day today"><div class="d">Mer<b>3</b></div><div class="slot"><div class="strong tnum">21:00 → 07:00</div><div class="small muted">Entrepôt Logista · Rondier · nuit</div></div></div>
+              <div class="day"><div class="d">Jeu<b>4</b></div><div class="slot"><div class="strong tnum">21:00 → 07:00</div><div class="small muted">Entrepôt Logista · Rondier · nuit</div></div></div>
+              <div class="day"><div class="d">Ven<b>5</b></div><div class="muted" style="align-self:center">Repos</div></div>
+              <div class="day"><div class="d">Sam<b>6</b></div><div class="slot"><div class="strong tnum">07:00 → 19:00</div><div class="small muted">Port Lympia · Capitainerie</div></div></div>
+              <div class="day"><div class="d">Dim<b>7</b></div><div class="slot"><div class="strong tnum">07:00 → 19:00</div><div class="small muted">Port Lympia · Capitainerie</div></div></div>
+            </div>
+            <p class="small muted">Total semaine : <b style="color:var(--c-text)">44 h</b></p>
+          </div>
+        </div>
+        <nav class="tabbar" aria-label="Navigation principale">
+          <a class="tab" href="#a3"><svg class="icon"><use href="#i-home"/></svg>Accueil</a>
+          <a class="tab active" href="#a12" aria-current="page"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="tab center" href="#a4"><span class="disc"><svg class="icon lg"><use href="#i-qr"/></svg></span>Pointer</a>
+          <a class="tab" href="#a10"><svg class="icon"><use href="#i-file"/></svg>Documents</a>
+          <a class="tab" href="#a9"><svg class="icon"><use href="#i-menu"/></svg>Plus</a>
+        </nav>
+      </div>
+    </figure>
+
+    <!-- A13 Documents société -->
+    <figure class="screen" id="a13">
+      <figcaption><span class="code">A13</span> Documents de la société</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>10:20</span><span>Wi-Fi 88 %</span></div>
+        <div class="app-bar"><button class="ib" aria-label="Retour"><svg class="icon"><use href="#i-back"/></svg></button><h3>Note de service 2027-03</h3></div>
+        <div class="ph-body">
+          <div class="content">
+            <div class="row"><span class="badge b-brand">À lire</span><span class="small muted">Publiée le 28/02/2027 · v1</span></div>
+            <div class="pdf-preview" aria-label="Aperçu du document">
+              <strong style="font-family:var(--font-title)">NOTE DE SERVICE N° 2027-03</strong>
+              <span class="small muted">Objet : tenue réglementaire et port de la carte professionnelle</span>
+              <i style="width:96%"></i><i style="width:88%"></i><i style="width:92%"></i><i style="width:60%"></i>
+              <i style="width:94%;margin-top:8px"></i><i style="width:85%"></i><i style="width:90%"></i><i style="width:40%"></i>
+              <i style="width:91%;margin-top:8px"></i><i style="width:76%"></i>
+            </div>
+            <button class="btn btn-outline block"><svg class="icon"><use href="#i-file"/></svg> Ouvrir le document complet</button>
+            <label class="check"><input type="checkbox"> J'ai lu et pris connaissance de ce document</label>
+            <button class="btn btn-primary block">Confirmer la lecture</button>
+            <div class="list-head">Déjà lus</div>
+            <div class="list">
+              <div class="li"><div class="grow"><div class="t1">Règlement intérieur v4</div><div class="t2">Lu le 02/01/2027</div></div><span class="badge b-success">Lu</span></div>
+              <div class="li"><div class="grow"><div class="t1">Consignes site Logista v3</div><div class="t2">Lu le 15/01/2027</div></div><span class="badge b-success">Lu</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- A14 Contact -->
+    <figure class="screen" id="a14">
+      <figcaption><span class="code">A14</span> Contact et suivi des demandes</figcaption>
+      <div class="phone">
+        <div class="ph-status"><span>10:24</span><span>Wi-Fi 88 %</span></div>
+        <div class="app-bar"><button class="ib" aria-label="Retour"><svg class="icon"><use href="#i-back"/></svg></button><h3>Contact</h3></div>
+        <div class="ph-body">
+          <div class="content">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+              <a class="btn btn-primary" href="#a14" style="flex-direction:column;min-height:72px;gap:2px;font-size:12px"><svg class="icon"><use href="#i-phone"/></svg>Permanence</a>
+              <a class="btn btn-outline" href="#a14" style="flex-direction:column;min-height:72px;gap:2px;font-size:12px"><svg class="icon"><use href="#i-mail"/></svg>RH</a>
+              <a class="btn btn-outline" href="#a14" style="flex-direction:column;min-height:72px;gap:2px;font-size:12px"><svg class="icon"><use href="#i-mail"/></svg>Paie</a>
+            </div>
+            <div class="card stack">
+              <h4 style="margin:0">Nouvelle demande</h4>
+              <div class="field"><label>Catégorie</label><select class="select"><option>Paie</option><option>RH</option><option>Planning</option><option>Urgence</option></select></div>
+              <div class="field"><label>Objet</label><input class="input" value="Heures de nuit de février"></div>
+              <div class="field"><label>Message</label><textarea class="textarea" style="min-height:72px">Bonjour, il me semble manquer 2 h de nuit le 20/02.</textarea></div>
+              <div class="row between"><button class="btn btn-ghost sm"><svg class="icon sm"><use href="#i-clip"/></svg> Joindre</button><button class="btn btn-primary sm">Envoyer</button></div>
+            </div>
+            <div class="list-head">Mes demandes</div>
+            <div class="list">
+              <div class="li"><div class="grow"><div class="t1">#128 · Paie — heures de nuit</div><div class="t2">Réponse de S. Durand il y a 2 h</div></div><span class="badge b-info">En cours</span></div>
+              <div class="li"><div class="grow"><div class="t1">#117 · Planning — échange</div><div class="t2">Résolue le 12/02</div></div><span class="badge b-success">Résolue</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     BORNE
+     ================================================================ -->
+<section class="doc-section" id="borne" aria-labelledby="h-borne">
+  <h2 id="h-borne"><span class="tag">Borne</span> Tablette de pointage (mode kiosque)</h2>
+  <div class="screens wide">
+    <figure class="screen" id="b1">
+      <figcaption><span class="code">B1</span> Borne — QR dynamique renouvelé toutes les 60 s</figcaption>
+      <div class="tablet">
+        <div class="borne on-dark">
+          <div class="row between wrap" style="gap:12px">
+            <span class="row" style="gap:12px"><svg width="40" height="45" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start;font-size:17px">Pegasus<small>Insure</small></span></span>
+            <span style="text-align:right"><span style="font:600 20px var(--font-title)">Entrepôt Logista</span><br><span style="color:#A7ADB7">Nice Ouest · Poste PC sécurité</span></span>
+          </div>
+          <div class="borne-grid">
+            <div class="qr-card"><svg class="qr-gen" data-seed="42" viewBox="0 0 29 29" role="img" aria-label="QR code de pointage"></svg></div>
+            <div>
+              <div class="clock" id="borneClock">21:02</div>
+              <p style="font-size:20px;color:#A7ADB7;margin-top:6px">mercredi 3 mars 2027</p>
+              <p style="font:600 24px/1.3 var(--font-title);margin-top:28px;max-width:420px">Scannez ce code avec l'application <span style="color:#F0686D">Pegasus</span> pour pointer votre arrivée ou votre départ.</p>
+              <div class="countdown" aria-hidden="true"><i id="borneBar"></i></div>
+              <p style="color:#A7ADB7;margin-top:8px" aria-live="off">Nouveau code dans <span class="tnum" id="borneSec">23</span> s</p>
+              <span class="nfc-hint"><svg class="icon"><use href="#i-nfc"/></svg> ou présentez votre badge sur le lecteur</span>
+            </div>
+          </div>
+          <div class="row" style="color:#A7ADB7;font-size:14px;gap:16px;flex-wrap:wrap">
+            <span class="row"><i style="width:10px;height:10px;border-radius:50%;background:#4CC38A;display:inline-block"></i> En ligne</span>
+            <span>Borne « PC sécurité » · v1</span>
+            <span>Urgence : 04 00 00 00 00</span>
+          </div>
+        </div>
+      </div>
+    </figure>
+    <figure class="screen" id="b2">
+      <figcaption><span class="code">B2</span> Borne — badge reconnu, saisie du PIN</figcaption>
+      <div class="tablet">
+        <div class="borne on-dark">
+          <div class="row between wrap" style="gap:12px">
+            <span class="row" style="gap:12px"><svg width="40" height="45" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start;font-size:17px">Pegasus<small>Insure</small></span></span>
+            <span style="text-align:right"><span style="font:600 20px var(--font-title)">Entrepôt Logista</span><br><span style="color:#A7ADB7">Nice Ouest · Poste PC sécurité</span></span>
+          </div>
+          <div class="borne-grid pin-layout">
+            <div>
+              <span class="row" style="color:#4CC38A;font-weight:600;gap:8px"><svg class="icon"><use href="#i-check"/></svg> Badge reconnu</span>
+              <p style="font:700 44px/1.1 var(--font-title);margin-top:10px">Bonjour Karim B.</p>
+              <p style="font-size:20px;color:#A7ADB7;margin-top:18px">Saisissez votre code PIN</p>
+              <div class="pindots" aria-label="2 chiffres saisis sur 4"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+              <button class="btn btn-outline" style="background:transparent;color:#ECEDEF;border-color:#6B727D">Annuler</button>
+              <p style="color:#A7ADB7;margin-top:18px;font-size:14px">Retour automatique à l'accueil dans 20 s</p>
+            </div>
+            <div class="pinpad" role="group" aria-label="Clavier numérique">
+              <button>1</button><button>2</button><button>3</button>
+              <button>4</button><button>5</button><button>6</button>
+              <button>7</button><button>8</button><button>9</button>
+              <button aria-label="Effacer">⌫</button><button>0</button><button class="ok" aria-label="Valider">✓</button>
+            </div>
+          </div>
+          <div class="row" style="color:#A7ADB7;font-size:14px;gap:16px;flex-wrap:wrap">
+            <span class="row"><i style="width:10px;height:10px;border-radius:50%;background:#4CC38A;display:inline-block"></i> En ligne · lecteur NFC connecté</span>
+            <span>Les chiffres ne s'affichent jamais à l'écran</span>
+          </div>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ================================================================
+     ADMINISTRATION
+     ================================================================ -->
+<section class="doc-section" id="admin" aria-labelledby="h-admin">
+  <h2 id="h-admin"><span class="tag">Admin</span> Back-office RH, administration et chefs d'équipe</h2>
+  <div class="screens wide">
+
+    <!-- D1 Tableau de bord -->
+    <figure class="screen" id="d1">
+      <figcaption><span class="code">D1</span> Tableau de bord</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head"><div><p class="crumb">Mercredi 3 mars 2027 · 22:15 · actualisé il y a 12 s</p><h2>Tableau de bord</h2></div><div class="filters"><select class="select sm" style="width:180px"><option>Tous les sites</option></select></div></div>
+              <div class="kpis six">
+                <div class="kpi lg"><div class="v">42</div><div class="l">Attendus</div></div>
+                <div class="kpi lg"><div class="v ok">39</div><div class="l">Présents</div></div>
+                <div class="kpi lg"><div class="v warn">2</div><div class="l">En retard</div></div>
+                <div class="kpi lg"><div class="v bad">1</div><div class="l">Absent</div></div>
+                <div class="kpi lg"><div class="v">0</div><div class="l">Départs manquants</div></div>
+                <div class="kpi lg"><div class="v warn">3</div><div class="l">À vérifier</div></div>
+              </div>
+              <div class="grid-2">
+                <div class="card">
+                  <div class="card-title"><h4>Rondes du jour</h4><a href="#d8" class="small">Voir tout</a></div>
+                  <div class="meter"><span class="strong tnum">18 / 20</span><div class="progress"><i style="width:90%"></i></div><span class="small muted">conformes</span></div>
+                  <div class="list" style="margin-top:12px">
+                    <div class="li"><span class="badge b-danger">Non démarrée</span><div class="grow"><div class="t1">Port Lympia · 22:00</div><div class="t2">Alerte envoyée à L. Nguyen</div></div></div>
+                    <div class="li"><span class="badge b-warning">Retard</span><div class="grow"><div class="t1">Clinique du Parc · 21:30</div><div class="t2">6/9 points · 41 min</div></div></div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-title"><h4>Anomalies ouvertes</h4><a href="#d8" class="small">Voir tout</a></div>
+                  <div class="row wrap" style="margin-bottom:12px"><span class="badge b-danger">1 critique</span><span class="badge b-warning">2 majeures</span><span class="badge b-info">4 mineures</span></div>
+                  <div class="list">
+                    <div class="li"><span class="badge b-danger">Critique</span><div class="grow"><div class="t1">Clinique du Parc — odeur de brûlé, local CTA</div><div class="t2">22:06 · M. Diallo · pompiers prévenus</div></div></div>
+                    <div class="li"><span class="badge b-warning">Majeure</span><div class="grow"><div class="t1">Logista — issue Nord ouverte</div><div class="t2">22:24 · K. Benali</div></div></div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-title"><h4>Échéances</h4><a href="#d2" class="small">Exporter</a></div>
+                  <div class="row wrap" style="margin-bottom:12px"><span class="badge b-danger">Expirés 1</span><span class="badge b-warning">≤ 7 j : 2</span><span class="badge b-warning">≤ 30 j : 5</span><span class="badge b-info">≤ 90 j : 11</span></div>
+                  <div class="list">
+                    <div class="li"><div class="grow"><div class="t1">Théo MARTIN — carte pro</div><div class="t2">Expire le 09/03/2027</div></div><span class="badge b-danger">6 j</span></div>
+                    <div class="li"><div class="grow"><div class="t1">Awa SOW — SST</div><div class="t2">Recyclage le 10/03/2027</div></div><span class="badge b-warning">7 j</span></div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-title"><h4>À traiter</h4></div>
+                  <div class="list">
+                    <div class="li"><span class="ico"><svg class="icon"><use href="#i-edit"/></svg></span><div class="grow"><div class="t1">4 corrections de pointage</div><div class="t2">Proposées par les chefs d'équipe</div></div><svg class="icon muted"><use href="#i-next"/></svg></div>
+                    <div class="li"><span class="ico"><svg class="icon"><use href="#i-msg"/></svg></span><div class="grow"><div class="t1">6 demandes ouvertes</div><div class="t2">dont 2 paie, 1 urgence traitée</div></div><svg class="icon muted"><use href="#i-next"/></svg></div>
+                    <div class="li"><span class="ico" style="color:var(--c-danger)"><svg class="icon"><use href="#i-power"/></svg></span><div class="grow"><div class="t1">1 borne hors ligne</div><div class="t2">Port Lympia · depuis 47 min</div></div><svg class="icon muted"><use href="#i-next"/></svg></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D2 Liste agents -->
+    <figure class="screen" id="d2">
+      <figcaption><span class="code">D2</span> Liste des agents</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/agents</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head"><div><h2>Agents <span class="muted" style="font-size:18px">(152)</span></h2></div><div class="row wrap"><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-up"/></svg> Importer CSV</button><button class="btn btn-primary sm"><svg class="icon sm"><use href="#i-plus"/></svg> Nouvel agent</button></div></div>
+              <div class="filters">
+                <input class="input sm" style="max-width:260px" placeholder="Nom, matricule…" aria-label="Rechercher">
+                <select class="select sm" style="width:160px" aria-label="Site"><option>Tous les sites</option></select>
+                <select class="select sm" style="width:140px" aria-label="Statut"><option>Actifs</option></select>
+                <select class="select sm" style="width:170px" aria-label="Échéance"><option>Toutes échéances</option></select>
+              </div>
+              <div class="table-wrap">
+                <table class="t">
+                  <thead><tr><th>Matricule</th><th>Nom</th><th>Fonction</th><th>Site principal</th><th>Carte pro</th><th>SST</th><th>Statut</th></tr></thead>
+                  <tbody>
+                    <tr><td class="mono">PGS-0042</td><td class="strong">BENALI Karim</td><td>ADS · Rondier</td><td>Logista Nice Ouest</td><td><span class="badge b-warning">24 j</span></td><td><span class="badge b-success">Valide</span></td><td><span class="badge b-success">Actif</span></td></tr>
+                    <tr><td class="mono">PGS-0051</td><td class="strong">MARTIN Théo</td><td>SSIAP 1</td><td>Clinique du Parc</td><td><span class="badge b-danger">6 j</span></td><td><span class="badge b-success">Valide</span></td><td><span class="badge b-success">Actif</span></td></tr>
+                    <tr><td class="mono">PGS-0063</td><td class="strong">NGUYEN Lina</td><td>Chef d'équipe</td><td>Port Lympia</td><td><span class="badge b-success">03/2029</span></td><td><span class="badge b-success">Valide</span></td><td><span class="badge b-success">Actif</span></td></tr>
+                    <tr><td class="mono">PGS-0077</td><td class="strong">SOW Awa</td><td>ADS</td><td>Port Lympia</td><td><span class="badge b-success">11/2028</span></td><td><span class="badge b-warning">7 j</span></td><td><span class="badge b-success">Actif</span></td></tr>
+                    <tr><td class="mono">PGS-0090</td><td class="strong">ROUX Pierre</td><td>ADS</td><td>Clinique du Parc</td><td><span class="badge b-success">06/2030</span></td><td><span class="badge b-muted">—</span></td><td><span class="badge b-info">Invité</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row between small muted"><span>1–25 sur 152</span><span class="row"><button class="btn btn-outline sm">‹</button><button class="btn btn-dark sm">1</button><button class="btn btn-outline sm">2</button><button class="btn btn-outline sm">3</button><button class="btn btn-outline sm">›</button></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D3 Fiche agent -->
+    <figure class="screen" id="d3">
+      <figcaption><span class="code">D3</span> Fiche agent</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/agents/42</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head">
+                <div class="row" style="gap:14px"><span class="avatar lg">KB</span><div><p class="crumb">Agents ›</p><h2>BENALI Karim</h2><p class="row small"><span class="mono">PGS-0042</span><span class="badge b-success">Actif</span><span class="muted">ADS · Rondier · équipe Nuit Ouest</span></p></div></div>
+                <div class="row wrap"><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-mail"/></svg> Renvoyer l'invitation</button><button class="btn btn-dark sm"><svg class="icon sm"><use href="#i-edit"/></svg> Modifier</button></div>
+              </div>
+              <nav class="tabs" aria-label="Sections de la fiche"><a class="on" href="#d3">Identité</a><a href="#d3">Contrat</a><a href="#d3">Conformité</a><a href="#d3">Documents</a><a href="#d3">Pointages</a><a href="#d3">Rondes</a><a href="#d3">Paie</a><a href="#d3">Historique</a></nav>
+              <div class="grid-2">
+                <div class="card">
+                  <h4>Identité</h4>
+                  <div class="list" style="border:0">
+                    <div class="li" style="padding-inline:0"><div class="grow"><div class="t2">Né le</div><div class="t1">14/05/1990 à Marseille (13)</div></div></div>
+                    <div class="li" style="padding-inline:0"><div class="grow"><div class="t2">Nationalité</div><div class="t1">Française</div></div></div>
+                    <div class="li" style="padding-inline:0"><div class="grow"><div class="t2">N° de sécurité sociale <svg class="icon sm" style="vertical-align:-3px"><use href="#i-lock"/></svg></div><div class="t1 mono">1 •• •• •• ••• ••• 42</div></div><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-eye"/></svg> Afficher</button></div>
+                    <div class="li" style="padding-inline:0"><div class="grow"><div class="t2">Adresse</div><div class="t1">12 rue Vernier, 06000 Nice</div></div></div>
+                    <div class="li" style="padding-inline:0"><div class="grow"><div class="t2">Contact</div><div class="t1">karim.benali@… · 06 •• •• 42 17</div></div></div>
+                  </div>
+                  <p class="help" style="margin-top:8px">L'affichage du NIR exige une réauthentification et est journalisé.</p>
+                </div>
+                <div class="stack">
+                  <div class="card">
+                    <div class="card-title"><h4>Conformité</h4><button class="btn btn-ghost sm"><svg class="icon sm"><use href="#i-plus"/></svg> Qualification</button></div>
+                    <div class="list">
+                      <div class="li"><div class="grow"><div class="t1">Carte pro CNAPS</div><div class="t2 mono">CAR-006-2029-03-27-…</div><div class="t2">Surveillance humaine · expire le 27/03/2027</div></div><span class="badge b-warning">24 j</span></div>
+                      <div class="li"><div class="grow"><div class="t1">SST n° 2025-06-8812</div><div class="t2">Recyclage 11/2027</div></div><span class="badge b-success">Valide</span></div>
+                      <div class="li"><div class="grow"><div class="t1">SSIAP 1</div><div class="t2">SDIS 06 · recyclage 05/2028</div></div><span class="badge b-success">Valide</span></div>
+                      <div class="li"><div class="grow"><div class="t1">CQP APS</div><div class="t2">2019 · sans échéance</div></div><span class="badge b-muted">Permanent</span></div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <h4>Affectations</h4>
+                    <div class="row wrap"><span class="chip on">Logista Nice Ouest · principal</span><span class="chip">Port Lympia</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D4 Création agent -->
+    <figure class="screen" id="d4">
+      <figcaption><span class="code">D4</span> Création d'un agent</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/agents/nouveau</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head"><div><p class="crumb">Agents ›</p><h2>Nouvel agent</h2></div></div>
+              <div class="steps"><span class="s on"><span class="n">1</span>Identité</span><span class="sep"></span><span class="s"><span class="n">2</span>Contrat et affectations</span><span class="sep"></span><span class="s"><span class="n">3</span>Conformité</span><span class="sep"></span><span class="s"><span class="n">4</span>Accès</span></div>
+              <form class="card" onsubmit="return false">
+                <div class="grid-3">
+                  <div class="field"><label>Civilité</label><select class="select"><option>M.</option><option>Mme</option></select></div>
+                  <div class="field"><label>Nom *</label><input class="input" value="LEROY"></div>
+                  <div class="field"><label>Prénom *</label><input class="input" value="Inès"></div>
+                  <div class="field"><label>Date de naissance *</label><input class="input" value="22/08/1996"></div>
+                  <div class="field"><label>Lieu de naissance *</label><input class="input" value="Toulon (83)"></div>
+                  <div class="field"><label>Nationalité *</label><select class="select"><option>Française</option></select></div>
+                  <div class="field"><label>N° de sécurité sociale * <svg class="icon sm" style="vertical-align:-3px"><use href="#i-lock"/></svg></label><input class="input mono" value="2 96 08 83 137 042 11" aria-describedby="nirh"><span class="help" id="nirh">Chiffré en base, clé de contrôle vérifiée.</span></div>
+                  <div class="field"><label>E-mail *</label><input class="input" value="ines.leroy@exemple.fr"></div>
+                  <div class="field"><label>Téléphone *</label><input class="input" value="06 12 34 56 78"></div>
+                  <div class="field" style="grid-column:span 2"><label>Adresse *</label><input class="input" value="4 avenue de la Californie"></div>
+                  <div class="field"><label>Code postal / Ville *</label><input class="input" value="06200 Nice"></div>
+                  <div class="field"><label>Matricule</label><input class="input mono" value="PGS-0153"><span class="help">Généré automatiquement, modifiable.</span></div>
+                </div>
+                <div class="row between wrap" style="margin-top:20px"><button class="btn btn-ghost" type="button">Annuler</button><div class="row"><button class="btn btn-outline" type="button">Enregistrer le brouillon</button><button class="btn btn-primary" type="submit">Suivant <svg class="icon sm"><use href="#i-next"/></svg></button></div></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D5 Import paie -->
+    <figure class="screen" id="d5">
+      <figcaption><span class="code">D5</span> Import des fiches de paie</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/paie/import/27</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head"><div><p class="crumb">Paie › Import</p><h2>Février 2027</h2></div></div>
+              <div class="steps"><span class="s done"><span class="n">✓</span>Déposer</span><span class="sep"></span><span class="s on"><span class="n">2</span>Contrôler</span><span class="sep"></span><span class="s"><span class="n">3</span>Publier</span></div>
+              <div class="dropzone"><svg class="icon lg"><use href="#i-up"/></svg><p class="strong" style="margin-top:6px">Ajouter d'autres PDF ou une archive ZIP</p><p class="small">5 Mo maximum par fichier · nommage attendu <span class="mono">MATRICULE_AAAAMM.pdf</span></p></div>
+              <div class="row wrap"><span class="badge b-success">148 associés</span><span class="badge b-warning">2 ambigus</span><span class="badge b-danger">1 introuvable</span><span class="badge b-muted">1 doublon</span></div>
+              <div class="table-wrap">
+                <table class="t">
+                  <thead><tr><th>Fichier</th><th>Agent associé</th><th>Méthode</th><th>Statut</th></tr></thead>
+                  <tbody>
+                    <tr><td class="mono">PGS-0042_202702.pdf</td><td>BENALI Karim</td><td>Matricule</td><td><span class="badge b-success">Associé</span></td></tr>
+                    <tr><td class="mono">martin_202702.pdf</td><td><select class="select sm" aria-label="Choisir l'agent"><option>Choisir : MARTIN Théo / MARTIN Sarah</option></select></td><td>Nom</td><td><span class="badge b-warning">Ambigu</span></td></tr>
+                    <tr><td class="mono">scan0001.pdf</td><td><select class="select sm" aria-label="Choisir l'agent"><option>Rechercher un agent…</option></select></td><td>—</td><td><span class="badge b-danger">Introuvable</span></td></tr>
+                    <tr><td class="mono">PGS-0063_202702 (1).pdf</td><td>NGUYEN Lina</td><td>Matricule</td><td><span class="badge b-muted">Doublon ignoré</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row between wrap"><button class="btn btn-ghost">Annuler l'import</button><button class="btn btn-primary">Publier 148 fiches et notifier <svg class="icon sm"><use href="#i-next"/></svg></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D6 Planning -->
+    <figure class="screen" id="d6">
+      <figcaption><span class="code">D6</span> Planning par site</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/planning?site=logista&amp;semaine=2027-W09</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head"><div><h2>Planning</h2></div><div class="row wrap"><button class="btn btn-outline sm">Dupliquer la semaine</button><button class="btn btn-primary sm">Publier (3 brouillons)</button></div></div>
+              <div class="filters"><select class="select sm" style="width:200px" aria-label="Site"><option>Entrepôt Logista — Nice Ouest</option></select><button class="btn btn-outline sm" aria-label="Semaine précédente">‹</button><strong>Semaine 9 · 1 → 7 mars 2027</strong><button class="btn btn-outline sm" aria-label="Semaine suivante">›</button><div class="seg" style="margin-left:auto"><button class="on">Semaine</button><button>Mois</button></div></div>
+              <div class="table-wrap">
+                <div class="cal">
+                  <div class="h">Agent</div><div class="h">Lun 1</div><div class="h">Mar 2</div><div class="h">Mer 3</div><div class="h">Jeu 4</div><div class="h">Ven 5</div><div class="h">Sam 6</div><div class="h">Dim 7</div>
+                  <div class="who">BENALI K.</div><div></div><div></div><div><span class="shift night">21:00–07:00</span></div><div><span class="shift night">21:00–07:00</span></div><div></div><div></div><div></div>
+                  <div class="who">MARTIN T.</div><div><span class="shift">07:00–19:00</span></div><div><span class="shift">07:00–19:00</span></div><div></div><div><span class="shift conflict">⚠ 05:00–17:00</span></div><div><span class="shift night">21:00–07:00</span></div><div><span class="shift night">21:00–07:00</span></div><div></div>
+                  <div class="who">NGUYEN L.</div><div><span class="shift night">21:00–07:00</span></div><div><span class="shift night">21:00–07:00</span></div><div></div><div></div><div><span class="shift">07:00–19:00</span></div><div><span class="shift draft">07:00–19:00</span></div><div><span class="shift draft">07:00–19:00</span></div>
+                  <div class="who">SOW A.</div><div></div><div><span class="shift draft">21:00–07:00</span></div><div><span class="shift">07:00–19:00</span></div><div><span class="shift">07:00–19:00</span></div><div></div><div></div><div></div>
+                  <div class="who muted">Non couvert</div><div></div><div></div><div></div><div></div><div class="gap"><span class="small" style="color:var(--c-danger);font-weight:600">21:00–07:00</span></div><div></div><div></div>
+                </div>
+              </div>
+              <div class="banner warning"><svg class="icon"><use href="#i-alert"/></svg><span><b>2 alertes</b> · <span class="t">MARTIN T. jeu 4 : repos quotidien de 10 h (minimum 11 h). Ven 5 : nuit non couverte.</span></span></div>
+              <div class="legend"><span><span class="shift" style="display:inline-block">Jour</span></span><span><span class="shift night" style="display:inline-block">Nuit</span></span><span><span class="shift draft" style="display:inline-block">Brouillon</span></span><span><span class="shift conflict" style="display:inline-block">Conflit</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D7 Suivi pointage -->
+    <figure class="screen" id="d7">
+      <figcaption><span class="code">D7</span> Suivi des pointages et correction</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/pointages</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page" style="position:relative">
+              <div class="page-head"><div><p class="crumb">Actualisation automatique toutes les 30 s</p><h2>Pointages</h2></div><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-dl"/></svg> Export CSV</button></div>
+              <div class="filters"><select class="select sm" style="width:150px" aria-label="Période"><option>Aujourd'hui</option></select><select class="select sm" style="width:150px" aria-label="Site"><option>Tous les sites</option></select><select class="select sm" style="width:150px" aria-label="Statut"><option>Tous statuts</option></select><span class="chip on">À vérifier (3)</span><span class="chip">Corrections en attente (4)</span></div>
+              <div class="table-wrap">
+                <table class="t">
+                  <thead><tr><th>Agent</th><th>Site</th><th>Prévu</th><th>Arrivée</th><th>Départ</th><th>Statut</th><th>Indicateurs</th><th></th></tr></thead>
+                  <tbody>
+                    <tr><td class="strong">BENALI K.</td><td>Logista</td><td class="tnum">21:00–07:00</td><td class="tnum">21:02</td><td>—</td><td><span class="badge b-success">Présent</span></td><td class="small muted">QR dynamique · 18 m</td><td><button class="btn btn-ghost sm">Détail</button></td></tr>
+                    <tr><td class="strong">DIALLO M.</td><td>Clinique du Parc</td><td class="tnum">19:00–07:00</td><td class="tnum">19:16</td><td>—</td><td><span class="badge b-warning">Retard 16 min</span></td><td class="small muted">—</td><td><button class="btn btn-ghost sm">Détail</button></td></tr>
+                    <tr><td class="strong">ROUX P.</td><td>Clinique du Parc</td><td class="tnum">20:00–08:00</td><td>—</td><td>—</td><td><span class="badge b-danger">Absent</span></td><td class="small muted">Alerte chef 20:30</td><td><button class="btn btn-outline sm">Corriger</button></td></tr>
+                    <tr style="background:var(--c-warning-bg)"><td class="strong">SOW A.</td><td>Port Lympia</td><td class="tnum">18:00–06:00</td><td class="tnum">18:01</td><td>—</td><td><span class="badge b-info">À vérifier</span></td><td class="small" style="color:var(--c-warning)">Hors zone · 420 m · QR statique</td><td><button class="btn btn-outline sm">Valider</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card" style="max-width:520px;box-shadow:var(--sh-lg);border-color:var(--c-border-input)" role="dialog" aria-label="Corriger le pointage de ROUX P.">
+                <div class="card-title"><h4>Corriger — ROUX Pierre · 03/03</h4><button class="btn btn-ghost sm" aria-label="Fermer"><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+                <div class="grid-2" style="gap:12px">
+                  <div class="field"><label>Action</label><select class="select"><option>Ajouter une arrivée</option></select></div>
+                  <div class="field"><label>Heure</label><input class="input" value="20:05"></div>
+                  <div class="field" style="grid-column:1/-1"><label>Motif *</label><select class="select"><option>Panne de téléphone de l'agent</option></select></div>
+                  <div class="field" style="grid-column:1/-1"><label>Précision *</label><input class="input" value="Présence confirmée par appel du chef d'équipe à 20:10"></div>
+                </div>
+                <p class="help" style="margin:10px 0">La correction est journalisée (avant / après, auteur, motif).</p>
+                <div class="row" style="justify-content:flex-end"><button class="btn btn-ghost sm">Annuler</button><button class="btn btn-primary sm">Appliquer la correction</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D8 Rondes temps réel -->
+    <figure class="screen" id="d8">
+      <figcaption><span class="code">D8</span> Suivi des rondes — plan du site en temps réel</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/sites/12/temps-reel</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head"><div><p class="crumb">Rondes › Entrepôt Logista — Nice Ouest</p><h2>Temps réel</h2></div><div class="row wrap"><span class="small muted row"><svg class="icon sm"><use href="#i-refresh"/></svg> actualisé il y a 6 s</span><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-dl"/></svg> Rapport</button></div></div>
+              <nav class="tabs"><a class="on" href="#d8">Plan</a><a href="#d8">Par ronde</a><a href="#d8">Par emplacement</a><a href="#d8">Par agent</a><a href="#d8">Anomalies</a></nav>
+              <div class="grid-2" style="grid-template-columns:minmax(0,2fr) minmax(260px,1fr)">
+                <div class="stack">
+                  <div class="plan" role="img" aria-label="Plan du site : 7 points contrôlés, 1 en retard, 2 à venir">
+                    <span class="bld" style="left:6%;top:10%;width:58%;height:52%"></span><span class="lbl" style="left:8%;top:12%">Entrepôt A</span>
+                    <span class="bld" style="left:68%;top:10%;width:26%;height:34%"></span><span class="lbl" style="left:70%;top:12%">Bureaux</span>
+                    <span class="bld" style="left:6%;top:70%;width:88%;height:20%;border-style:dashed"></span><span class="lbl" style="left:8%;top:72%">Parking</span>
+                    <span class="pin ok" style="left:72%;top:36%" title="1 Accueil — 22:04">1</span>
+                    <span class="pin ok" style="left:20%;top:25%" title="2 Quai A — 22:07">2</span>
+                    <span class="pin ok" style="left:42%;top:22%" title="3 Quai B — 22:09">3</span>
+                    <span class="pin ok" style="left:30%;top:46%" title="4 Stock — 22:11">4</span>
+                    <span class="pin ok" style="left:52%;top:50%" title="5 Atelier — 22:13">5</span>
+                    <span class="pin ok" style="left:22%;top:80%" title="6 Parking extérieur — 22:15">6</span>
+                    <span class="pin ok" style="left:86%;top:30%" title="7 TGBT — 22:19">7</span>
+                    <span class="pin late pulse" style="left:60%;top:14%" title="8 Issue Nord — en retard">!</span>
+                    <span class="pin todo" style="left:64%;top:82%" title="9 Parking -1 — à venir">9</span>
+                    <span class="pin todo" style="left:88%;top:56%" title="10 Toiture — à venir">10</span>
+                  </div>
+                  <div class="legend"><span><i style="background:var(--c-success)"></i>✓ Contrôlé (7)</span><span><i style="background:#C26A00"></i>! En retard (1)</span><span><i style="background:var(--c-danger)"></i>✕ Manqué (0)</span><span><i style="background:var(--c-muted)"></i>○ À venir (2)</span></div>
+                </div>
+                <div class="card stack">
+                  <div class="row between"><h4 style="margin:0">Ronde 22:00</h4><span class="badge b-info">En cours</span></div>
+                  <p class="small"><b>K. BENALI</b> · démarrée 22:03 · <span class="tnum">21 min</span></p>
+                  <div class="meter"><span class="strong tnum">7/10</span><div class="progress"><i style="width:70%"></i></div></div>
+                  <div class="list-head">Flux des passages</div>
+                  <div class="flux">
+                    <div class="ev"><span class="tnum muted">22:24</span><span><b style="color:var(--c-warning)">⚠ Anomalie majeure</b> · Issue Nord ouverte</span></div>
+                    <div class="ev"><span class="tnum muted">22:19</span><span>✓ 7 Local TGBT</span></div>
+                    <div class="ev"><span class="tnum muted">22:15</span><span>✓ 6 Parking extérieur</span></div>
+                    <div class="ev"><span class="tnum muted">22:13</span><span>✓ 5 Atelier</span></div>
+                    <div class="ev"><span class="tnum muted">22:11</span><span>✓ 4 Stock · <span class="badge b-warning" style="font-size:10px">trop rapide</span></span></div>
+                  </div>
+                  <p class="small muted">Prochaine ronde : 00:00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D9 Rapports mensuels -->
+    <figure class="screen" id="d9">
+      <figcaption><span class="code">D9</span> Rapports PDF mensuels et heures</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/rapports?mois=2027-02</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head"><div><h2>Rapports mensuels</h2></div><div class="row wrap"><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-dl"/></svg> Variables de paie (CSV)</button><button class="btn btn-dark sm"><svg class="icon sm"><use href="#i-lock"/></svg> Clôturer février</button></div></div>
+              <div class="filters"><select class="select sm" style="width:160px" aria-label="Période"><option>Février 2027</option></select><select class="select sm" style="width:160px" aria-label="Site"><option>Tous les sites</option></select><button class="btn btn-primary sm" style="margin-left:auto">Générer pour tous (152)</button></div>
+              <div class="card"><div class="meter"><span class="strong">Lot en cours</span><div class="progress"><i style="width:68%;background:var(--c-info)"></i></div><span class="tnum small">104 / 152</span><button class="btn btn-ghost sm" disabled>ZIP disponible à la fin</button></div></div>
+              <div class="table-wrap">
+                <table class="t">
+                  <thead><tr><th>Agent</th><th class="num">Prévu</th><th class="num">Pointé</th><th class="num">Nuit</th><th class="num">Dim.</th><th class="num">Férié</th><th class="num">HS 25</th><th class="num">Retards</th><th>Statut</th><th></th></tr></thead>
+                  <tbody>
+                    <tr><td class="strong">BENALI Karim</td><td class="num">144,0</td><td class="num">142,5</td><td class="num">96,0</td><td class="num">24,0</td><td class="num">0,0</td><td class="num">0,0</td><td class="num">1</td><td><span class="badge b-success">Généré</span></td><td class="row"><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon sm"><use href="#i-dl"/></svg></button><button class="btn btn-ghost sm" aria-label="Envoyer à l'agent"><svg class="icon sm"><use href="#i-mail"/></svg></button></td></tr>
+                    <tr><td class="strong">MARTIN Théo</td><td class="num">151,0</td><td class="num">155,5</td><td class="num">48,0</td><td class="num">12,0</td><td class="num">0,0</td><td class="num">4,5</td><td class="num">0</td><td><span class="badge b-info">Envoyé</span></td><td><button class="btn btn-ghost sm" aria-label="Télécharger"><svg class="icon sm"><use href="#i-dl"/></svg></button></td></tr>
+                    <tr><td class="strong">SOW Awa</td><td class="num">132,0</td><td class="num">131,0</td><td class="num">60,0</td><td class="num">24,0</td><td class="num">0,0</td><td class="num">0,0</td><td class="num">2</td><td><span class="badge b-muted">En file</span></td><td></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="help">Heures en décimal. Majorations calculées selon les règles paramétrées (CCN IDCC 1351, à valider par le gestionnaire de paie). 2 pointages « à vérifier » sont signalés dans les rapports concernés.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D10 Documents société -->
+    <figure class="screen" id="d10">
+      <figcaption><span class="code">D10</span> Documents de la société et accusés de lecture</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/societe</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head"><div><h2>Documents de la société</h2></div><button class="btn btn-primary sm"><svg class="icon sm"><use href="#i-plus"/></svg> Publier un document</button></div>
+              <div class="table-wrap">
+                <table class="t">
+                  <thead><tr><th>Titre</th><th>Catégorie</th><th>Version</th><th>Ciblage</th><th style="min-width:200px">Accusés de lecture</th><th></th></tr></thead>
+                  <tbody>
+                    <tr><td class="strong">Règlement intérieur</td><td>Règlement</td><td>v4</td><td>Tous</td><td><div class="meter"><div class="progress"><i style="width:92%"></i></div><span class="tnum small">92 %</span></div></td><td><button class="btn btn-ghost sm">Suivi</button></td></tr>
+                    <tr><td class="strong">Note de service 2027-03 — tenue</td><td>Note de service</td><td>v1</td><td>Tous</td><td><div class="meter"><div class="progress"><i style="width:35%;background:var(--c-warning)"></i></div><span class="tnum small">35 %</span></div></td><td><button class="btn btn-outline sm">Relancer 98</button></td></tr>
+                    <tr><td class="strong">Consignes site Logista</td><td>Consignes de site</td><td>v3</td><td>1 site</td><td><div class="meter"><div class="progress"><i style="width:100%"></i></div><span class="tnum small">100 %</span></div></td><td><button class="btn btn-ghost sm">Suivi</button></td></tr>
+                    <tr><td class="strong">Procédure incendie SSIAP</td><td>Procédure</td><td>v2</td><td>Rôle SSIAP</td><td><div class="meter"><div class="progress"><i style="width:78%"></i></div><span class="tnum small">78 %</span></div></td><td><button class="btn btn-ghost sm">Suivi</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="banner info"><svg class="icon"><use href="#i-file"/></svg><span class="t">Une nouvelle version réinitialise les accusés de lecture. L'export CSV des accusés sert de preuve en cas de contrôle.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D11 Sites, bornes, points -->
+    <figure class="screen" id="d11">
+      <figcaption><span class="code">D11</span> Sites, bornes et points de contrôle — QR codes</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/sites/12/points</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head"><div><p class="crumb">Sites › Client : Logista SAS</p><h2>Entrepôt Logista — Nice Ouest</h2></div><span class="badge b-success">Actif</span></div>
+              <nav class="tabs"><a href="#d11">Informations</a><a href="#d11">Bornes</a><a class="on" href="#d11">Points de contrôle</a><a href="#d11">Plan</a><a href="#d11">Rondes planifiées</a></nav>
+              <div class="grid-2" style="grid-template-columns:minmax(0,2fr) minmax(240px,1fr)">
+                <div class="stack">
+                  <div class="row between wrap"><strong>10 points actifs</strong><div class="row"><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-print"/></svg> Planche d'étiquettes</button><button class="btn btn-primary sm"><svg class="icon sm"><use href="#i-plus"/></svg> Point</button></div></div>
+                  <div class="table-wrap">
+                    <table class="t" style="min-width:560px">
+                      <thead><tr><th>#</th><th>ID</th><th>Nom</th><th>Zone</th><th>QR</th><th>Dernier passage</th><th>Actions</th></tr></thead>
+                      <tbody>
+                        <tr><td>1</td><td class="mono">PC-0101</td><td class="strong">Accueil principal</td><td>RDC</td><td>v1</td><td class="small">22:04 · K. Benali</td><td class="row"><button class="btn btn-ghost sm" aria-label="Afficher le QR"><svg class="icon sm"><use href="#i-qr"/></svg></button><button class="btn btn-ghost sm" aria-label="Régénérer le QR"><svg class="icon sm"><use href="#i-refresh"/></svg></button><button class="btn btn-ghost sm" aria-label="Modifier"><svg class="icon sm"><use href="#i-edit"/></svg></button></td></tr>
+                        <tr><td>7</td><td class="mono">PC-0107</td><td class="strong">Local TGBT</td><td>Sous-sol</td><td>v1</td><td class="small">22:19 · K. Benali</td><td class="row"><button class="btn btn-ghost sm" aria-label="Afficher le QR"><svg class="icon sm"><use href="#i-qr"/></svg></button><button class="btn btn-ghost sm" aria-label="Régénérer le QR"><svg class="icon sm"><use href="#i-refresh"/></svg></button><button class="btn btn-ghost sm" aria-label="Modifier"><svg class="icon sm"><use href="#i-edit"/></svg></button></td></tr>
+                        <tr><td>8</td><td class="mono">PC-0108</td><td class="strong">Issue de secours Nord</td><td>RDC</td><td>v2</td><td class="small">20:03 · L. Nguyen</td><td class="row"><button class="btn btn-ghost sm" aria-label="Afficher le QR"><svg class="icon sm"><use href="#i-qr"/></svg></button><button class="btn btn-ghost sm" aria-label="Régénérer le QR"><svg class="icon sm"><use href="#i-refresh"/></svg></button><button class="btn btn-ghost sm" aria-label="Modifier"><svg class="icon sm"><use href="#i-edit"/></svg></button></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card">
+                    <div class="card-title"><h4>Bornes de pointage</h4><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-plus"/></svg> Enrôler une borne</button></div>
+                    <div class="li" style="padding-inline:0;border:0"><span class="ico"><svg class="icon"><use href="#i-qr"/></svg></span><div class="grow"><div class="t1">PC sécurité</div><div class="t2">Dernier signal il y a 2 min · Android 13 · Chrome</div></div><span class="badge b-success">En ligne</span><button class="btn btn-ghost sm" style="color:var(--c-danger)">Révoquer</button></div>
+                  </div>
+                </div>
+                <div class="card stack" style="align-items:center;text-align:center">
+                  <p class="small muted">Aperçu de l'étiquette (90 × 60 mm)</p>
+                  <div style="border:1px dashed var(--c-border-input);border-radius:8px;padding:12px;background:#fff;color:#111214;width:100%;max-width:240px">
+                    <div class="row" style="justify-content:center;gap:6px;margin-bottom:6px"><svg width="18" height="20" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span style="font:700 11px var(--font-title);letter-spacing:.12em">PEGASUS INSURE</span></div>
+                    <svg class="qr-gen" data-seed="108" viewBox="0 0 29 29" style="width:140px;height:140px" role="img" aria-label="QR du point PC-0108"></svg>
+                    <div style="font:700 14px var(--font-title);margin-top:4px">Issue de secours Nord</div>
+                    <div style="font:500 12px var(--font-mono)">PC-0108 · RDC · v2</div>
+                  </div>
+                  <button class="btn btn-outline sm block"><svg class="icon sm"><use href="#i-print"/></svg> Imprimer ce point</button>
+                  <p class="help">Régénérer invalide immédiatement l'ancien QR (motif obligatoire, journalisé).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <!-- D12 Audit -->
+    <figure class="screen" id="d12">
+      <figcaption><span class="code">D12</span> Journal d'audit</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/audit</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head"><div><h2>Journal d'audit</h2></div><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-dl"/></svg> Export CSV</button></div>
+              <div class="banner success"><svg class="icon"><use href="#i-shield"/></svg><span class="t">Intégrité de la chaîne vérifiée le 03/03/2027 à 02:30 — 184 512 entrées, aucune rupture.</span></div>
+              <div class="filters"><input class="input sm" style="width:130px" value="01/03/2027" aria-label="Du"><input class="input sm" style="width:130px" value="03/03/2027" aria-label="Au"><select class="select sm" style="width:200px" aria-label="Action"><option>Actions sensibles</option></select><select class="select sm" style="width:170px" aria-label="Utilisateur"><option>Tous les utilisateurs</option></select></div>
+              <div class="table-wrap">
+                <table class="t">
+                  <thead><tr><th>Date</th><th>Utilisateur</th><th>Rôle</th><th>Action</th><th>Objet</th><th>IP</th></tr></thead>
+                  <tbody>
+                    <tr><td class="tnum">03/03 14:12:08</td><td>S. Durand</td><td>RH</td><td><span class="mono">agent.nir.reveler</span></td><td class="mono">PGS-0042</td><td class="mono small">81.250.x.x</td></tr>
+                    <tr><td class="tnum">03/03 11:40:51</td><td>A. Moreau</td><td>Admin</td><td><span class="mono">point.qr.regenerer</span></td><td class="mono">PC-0108</td><td class="mono small">81.250.x.x</td></tr>
+                    <tr><td class="tnum">03/03 09:02:17</td><td>S. Durand</td><td>RH</td><td><span class="mono">pointage.corriger</span></td><td class="mono">#88412</td><td class="mono small">81.250.x.x</td></tr>
+                    <tr><td class="tnum">02/03 18:30:44</td><td>K. Benali</td><td>Agent</td><td><span class="mono">paie.telecharger</span></td><td class="mono">2027-02</td><td class="mono small">92.184.x.x</td></tr>
+                    <tr><td class="tnum">02/03 08:15:02</td><td>A. Moreau</td><td>Admin</td><td><span class="mono">borne.revoquer</span></td><td class="mono">B-07</td><td class="mono small">81.250.x.x</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+
+    <!-- D13 Badge -->
+    <figure class="screen" id="d13">
+      <figcaption><span class="code">D13</span> Fiche agent — onglet Badge NFC</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/admin/agents/42/badge</span></div>
+        <div class="admin">
+          <nav class="sidebar on-dark" aria-label="Menu administration">
+          <span class="brand"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Insure</small></span></span>
+          <span class="sb-group">Pilotage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Tableau de bord</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-clock"/></svg>Pointages<span class="cnt">3</span></a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-route"/></svg>Rondes</a>
+          <span class="sb-group">Personnel</span>
+          <a class="sb-link active" href="#admin" aria-current="page"><svg class="icon"><use href="#i-users"/></svg>Agents</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-cal"/></svg>Planning</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-euro"/></svg>Paie</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-file"/></svg>Documents société</a>
+          <span class="sb-group">Activité</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-chart"/></svg>Rapports</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-msg"/></svg>Demandes<span class="cnt">6</span></a>
+          <span class="sb-group">Paramétrage</span>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-building"/></svg>Sites et QR</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-shield"/></svg>Clients</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-gear"/></svg>Rôles et droits</a>
+          <a class="sb-link" href="#admin"><svg class="icon"><use href="#i-history"/></svg>Journal d'audit</a>
+          </nav>
+          <div class="main">
+            <div class="topbar"><label class="search"><svg class="icon sm"><use href="#i-search"/></svg><span>Rechercher un agent, un site, un point…</span></label><span style="margin-left:auto" class="row"><button class="btn btn-ghost sm" aria-label="Notifications" style="color:var(--c-text)"><svg class="icon"><use href="#i-bell"/></svg></button><span class="avatar" style="width:34px;height:34px;font-size:12px">SD</span><span class="small"><b>S. Durand</b><br><span class="muted">RH</span></span></span></div>
+            <div class="page">
+              <div class="page-head">
+                <div class="row" style="gap:14px"><span class="avatar lg">KB</span><div><p class="crumb">Agents ›</p><h2>BENALI Karim</h2><p class="row small"><span class="mono">PGS-0042</span><span class="badge b-success">Actif</span></p></div></div>
+              </div>
+              <nav class="tabs" aria-label="Sections de la fiche"><a href="#d3">Identité</a><a href="#d3">Contrat</a><a href="#d3">Conformité</a><a class="on" href="#d13">Badge</a><a href="#d3">Documents</a><a href="#d3">Pointages</a><a href="#d3">Rondes</a></nav>
+              <div class="grid-2">
+                <div class="card stack">
+                  <div class="row between"><h4 style="margin:0">Badge <span class="mono">B-000042</span></h4><span class="badge b-success">Actif</span></div>
+                  <div class="list" style="border:0">
+                    <div class="li" style="padding-inline:0"><div class="grow"><div class="t2">UID</div><div class="t1 mono">•••• 3F9A</div></div><svg class="icon muted"><use href="#i-lock"/></svg></div>
+                    <div class="li" style="padding-inline:0"><div class="grow"><div class="t2">Émis le</div><div class="t1">12/09/2022 par S. Durand</div></div></div>
+                    <div class="li" style="padding-inline:0"><div class="grow"><div class="t2">Dernière utilisation</div><div class="t1">03/03/2027 21:02 · Logista (borne PC sécurité)</div></div></div>
+                    <div class="li" style="padding-inline:0"><div class="grow"><div class="t2">PIN</div><div class="t1">Défini par l'agent · 0 erreur</div></div><button class="btn btn-outline sm">Réinitialiser</button></div>
+                  </div>
+                  <div class="row wrap"><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-print"/></svg> Réimprimer</button><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-refresh"/></svg> Remplacer</button><button class="btn btn-danger sm"><svg class="icon sm"><use href="#i-power"/></svg> Déclarer perdu / volé</button></div>
+                </div>
+                <div class="card stack">
+                  <h4 style="margin:0">Aperçu de la carte (CR80)</h4>
+                  <div class="row wrap" style="gap:14px">
+                    <div class="idcard" aria-label="Recto du badge">
+                      <div class="band"><svg width="14" height="16" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg>PEGASUS INSURE</div>
+                      <div class="body"><span class="ph"></span><div><div class="nm">BENALI</div><div class="nm" style="font-weight:600">Karim</div><div class="lbl" style="margin-top:6px">Né le</div><div>14/05/1990</div><div class="lbl" style="margin-top:4px">Fonction</div><div>Agent de sécurité</div></div></div>
+                      <svg class="icon nfc" aria-hidden="true"><use href="#i-nfc"/></svg>
+                    </div>
+                    <div class="idcard" aria-label="Verso du badge">
+                      <div class="body" style="flex-direction:column;gap:3px">
+                        <div class="lbl">Carte professionnelle CNAPS</div><div class="mono" style="font-size:10px">CAR-006-2029-03-27-…</div>
+                        <div class="lbl">Activité autorisée</div><div>Surveillance humaine</div>
+                        <div class="lbl">Expire le</div><div>27/03/2027</div>
+                        <div style="font-size:8.5px;color:#5A606B;margin-top:4px">Badge B-000042 · Propriété de Pegasus Insure, à restituer en fin de contrat · En cas de perte : 04 00 00 00 00</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="banner warning"><svg class="icon"><use href="#i-alert"/></svg><span class="t">La carte professionnelle expire dans 24 jours : badge à réimprimer après renouvellement si le numéro change.</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ================================================================
+     PORTAIL CLIENT
+     ================================================================ -->
+<section class="doc-section" id="client" aria-labelledby="h-client">
+  <h2 id="h-client"><span class="tag">Client</span> Portail client (lecture seule)</h2>
+  <div class="screens wide">
+    <figure class="screen" id="c1">
+      <figcaption><span class="code">C1</span> Tableau de bord client</figcaption>
+      <div class="browser">
+        <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url">app.pegasus-insure.fr/client</span></div>
+        <div style="background:var(--c-bg)">
+          <div class="topbar" style="justify-content:space-between;border-bottom:3px solid var(--pg-rouge)">
+            <span class="row" style="gap:10px"><svg width="28" height="32" viewBox="0 0 34 38" aria-hidden="true"><use href="#i-logo-shield"/></svg><span class="wordmark" style="flex-direction:column;align-items:flex-start">Pegasus<small>Espace client</small></span></span>
+            <nav class="row small strong" style="gap:16px;flex-wrap:wrap"><a href="#c1" style="color:var(--c-text)">Mes sites</a><a href="#c1" style="color:var(--c-text-2);text-decoration:none">Rondes</a><a href="#c1" style="color:var(--c-text-2);text-decoration:none">Anomalies</a><a href="#c1" style="color:var(--c-text-2);text-decoration:none">Rapports</a><a href="#c1" style="color:var(--c-text-2);text-decoration:none">Contact</a></nav>
+            <span class="row small"><span class="avatar" style="width:32px;height:32px;font-size:12px">JP</span> Logista SAS</span>
+          </div>
+          <div class="page">
+            <div class="page-head"><div><h2>Vos sites</h2><p class="muted small">Données mises à jour toutes les 20 s</p></div><button class="btn btn-outline sm"><svg class="icon sm"><use href="#i-dl"/></svg> Rapport de février (PDF)</button></div>
+            <div class="grid-2">
+              <div class="card site-card">
+                <div class="row between"><h4 style="margin:0">Entrepôt Nice Ouest</h4><span class="badge b-success">2 agents en poste</span></div>
+                <div class="kpis">
+                  <div class="kpi"><div class="v ok">98 %</div><div class="l">Conformité 7 j</div></div>
+                  <div class="kpi"><div class="v tnum">22:03</div><div class="l">Dernière ronde</div></div>
+                  <div class="kpi"><div class="v warn">1</div><div class="l">Anomalie ouverte</div></div>
+                </div>
+                <p class="small muted">Ronde de 22:00 en cours · 7/10 points contrôlés</p>
+                <div class="row wrap"><button class="btn btn-dark sm"><svg class="icon sm"><use href="#i-pin"/></svg> Plan temps réel</button><button class="btn btn-outline sm">Rondes</button><button class="btn btn-outline sm">Rapports</button></div>
+              </div>
+              <div class="card site-card">
+                <div class="row between"><h4 style="margin:0">Plateforme Cannes La Bocca</h4><span class="badge b-success">1 agent en poste</span></div>
+                <div class="kpis">
+                  <div class="kpi"><div class="v warn">91 %</div><div class="l">Conformité 7 j</div></div>
+                  <div class="kpi"><div class="v tnum">21:30</div><div class="l">Dernière ronde</div></div>
+                  <div class="kpi"><div class="v">0</div><div class="l">Anomalie ouverte</div></div>
+                </div>
+                <p class="small muted">Dernière ronde incomplète · 8/9 points (Toiture manquée)</p>
+                <div class="row wrap"><button class="btn btn-dark sm"><svg class="icon sm"><use href="#i-pin"/></svg> Plan temps réel</button><button class="btn btn-outline sm">Rondes</button><button class="btn btn-outline sm">Rapports</button></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title"><h4>Dernières anomalies</h4><a href="#c1" class="small">Toutes les anomalies</a></div>
+              <div class="table-wrap" style="border:0">
+                <table class="t">
+                  <thead><tr><th>Date</th><th>Site</th><th>Emplacement</th><th>Catégorie</th><th>Gravité</th><th>Traitement</th></tr></thead>
+                  <tbody>
+                    <tr><td class="tnum">03/03 22:24</td><td>Nice Ouest</td><td>Issue de secours Nord</td><td>Accès ouvert</td><td><span class="badge b-warning">Majeure</span></td><td><span class="badge b-info">En cours</span></td></tr>
+                    <tr><td class="tnum">28/02 03:12</td><td>Cannes</td><td>Parking</td><td>Éclairage</td><td><span class="badge b-muted">Mineure</span></td><td><span class="badge b-success">Résolue</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <p class="help">Les noms des agents ne sont pas affichés (option désactivée pour votre entreprise). Aucune donnée personnelle des agents n'est accessible depuis cet espace.</p>
+          </div>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<script>
+(function(){
+  /* --- Thème : auto → clair → sombre --- */
+  var root=document.documentElement,btn=document.getElementById('themeToggle');
+  var modes=['auto','light','dark'],labels={auto:'Thème : auto',light:'Thème : clair',dark:'Thème : sombre'},i=0;
+  try{var s=localStorage.getItem('pg-theme');if(s&&modes.indexOf(s)>-1){i=modes.indexOf(s);}}catch(e){}
+  function apply(){var m=modes[i];if(m==='auto'){root.removeAttribute('data-theme');}else{root.setAttribute('data-theme',m);}btn.textContent=labels[m];btn.setAttribute('aria-pressed',m!=='auto');}
+  apply();
+  btn.addEventListener('click',function(){i=(i+1)%modes.length;apply();try{localStorage.setItem('pg-theme',modes[i]);}catch(e){}});
+
+  /* --- Logo officiel s'il est présent à côté du fichier --- */
+  var probe=new Image();
+  probe.onload=function(){document.querySelectorAll('.logo-img').forEach(function(img){img.hidden=false;});document.querySelectorAll('.logo-fallback').forEach(function(el){el.hidden=true;});};
+  probe.src='logo-pegasus-insure.png';
+
+  /* --- QR codes factices (visuels uniquement, non scannables) --- */
+  function rng(seed){return function(){seed=(seed*1103515245+12345)%2147483648;return seed/2147483648;};}
+  function finder(cells,x,y){for(var r=0;r<7;r++)for(var c=0;c<7;c++){var on=(r===0||r===6||c===0||c===6||(r>=2&&r<=4&&c>=2&&c<=4));cells[(y+r)*29+(x+c)]=on?1:0;}}
+  document.querySelectorAll('.qr-gen').forEach(function(svg){
+    var rand=rng(parseInt(svg.getAttribute('data-seed')||'1',10)),cells=new Array(29*29),n,k,d='';
+    for(n=0;n<cells.length;n++)cells[n]=rand()>0.52?1:0;
+    finder(cells,0,0);finder(cells,22,0);finder(cells,0,22);
+    for(n=0;n<8;n++){for(k=0;k<8;k++){if(n===7||k===7){cells[n*29+k]=0;cells[n*29+(28-k)]=0;cells[(28-n)*29+k]=0;}}}
+    for(n=8;n<21;n++){cells[6*29+n]=n%2===0?1:0;cells[n*29+6]=n%2===0?1:0;}
+    for(n=0;n<29;n++)for(k=0;k<29;k++)if(cells[n*29+k])d+='M'+k+' '+n+'h1v1h-1z';
+    var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',d);p.setAttribute('fill','#111214');p.setAttribute('shape-rendering','crispEdges');
+    svg.appendChild(p);
+  });
+
+  /* --- Horloge et compte à rebours de la borne --- */
+  var clock=document.getElementById('borneClock'),bar=document.getElementById('borneBar'),sec=document.getElementById('borneSec');
+  function tick(){var d=new Date();clock.textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');var left=60-d.getSeconds();sec.textContent=left;bar.style.width=(left/60*100)+'%';}
+  tick();setInterval(tick,1000);
+})();
+</script>
+
+</main>
+</body>
+</html>

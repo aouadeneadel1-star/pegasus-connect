@@ -1,0 +1,74 @@
+/* Portail client : en-tête horizontal, contenu centré. S'appuie sur admin.css. */
+
+.client-entete {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--pg-graphite);
+  color: #fff;
+}
+
+:root[data-theme="dark"] .client-entete { background: #121417; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .client-entete { background: #121417; }
+}
+
+.client-barre {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px var(--sp-4);
+}
+
+.client-barre .sidebar-marque { margin: 0; padding: 0; border: 0; }
+
+.client-nav {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.client-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  color: #d4d7dc;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.client-nav a:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.client-nav a[aria-current="page"] { background: rgba(255, 255, 255, 0.12); color: #fff; box-shadow: inset 0 -3px 0 #f0686d; }
+
+.client-entete .compte { color: #fff; }
+.client-entete .btn-ghost { color: #fff; }
+
+.client-page { max-width: 1200px; margin: 0 auto; }
+
+.client-pied {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--sp-5) var(--sp-4);
+  color: var(--c-text-2);
+  font-size: var(--fs-xs);
+}
+
+.carte-site { color: inherit; text-decoration: none; transition: box-shadow 0.15s; }
+.carte-site:hover { box-shadow: var(--sh-md); }
+
+@media (max-width: 760px) {
+  .client-barre { flex-wrap: wrap; gap: var(--sp-2); }
+  .client-nav { order: 3; flex-basis: 100%; }
+}

@@ -1,0 +1,17 @@
+/vendor/
+/.env
+/.env.testing
+/public/.user.ini
+
+/storage/**
+!/storage/**/
+!/storage/**/.gitkeep
+!/storage/.htaccess
+
+/.phpunit.cache/
+/coverage/
+
+.DS_Store
+Thumbs.db
+/.idea/
+/.vscode/

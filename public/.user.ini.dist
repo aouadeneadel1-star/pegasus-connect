@@ -1,0 +1,27 @@
+; public/.user.ini est produit à partir de ce modèle par php bin/installer-user-ini.php,
+; qui remplace les chemins par leur valeur absolue sur le serveur.
+; Modifier ce modèle, jamais le fichier produit, puis relancer le script.
+
+display_errors = Off
+log_errors = On
+error_log = "{{STORAGE_PATH}}/logs/php-error.log"
+error_reporting = E_ALL
+
+date.timezone = UTC
+default_charset = "UTF-8"
+
+memory_limit = 256M
+max_execution_time = 60
+upload_max_filesize = 20M
+post_max_size = 22M
+max_file_uploads = 25
+
+session.save_path = "{{STORAGE_PATH}}/sessions"
+session.use_strict_mode = 1
+session.use_only_cookies = 1
+session.cookie_httponly = 1
+session.cookie_secure = 1
+session.cookie_samesite = "Lax"
+session.gc_maxlifetime = 43200
+
+expose_php = Off

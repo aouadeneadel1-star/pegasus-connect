@@ -1,0 +1,166 @@
+/* Charte graphique Pegasus Insure (cahier des charges, § 7.7). */
+
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/inter-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../fonts/jetbrains-mono-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Saira, police de titre de la charte, n'est pas encore embarquée : Inter prend le relais.
+   Pour l'activer, déposer saira-variable.woff2 dans assets/fonts et ajouter ici
+   une règle @font-face « Saira » (graisses 600 à 700). */
+
+:root {
+  --pg-noir: #111214;
+  --pg-rouge: #a51d24;
+  --pg-rouge-hover: #861519;
+  --pg-rouge-voile: #f8e8e9;
+  --pg-graphite: #2b2f36;
+
+  --c-bg: #f4f5f7;
+  --c-surface: #ffffff;
+  --c-surface-2: #eceef1;
+  --c-text: #16181d;
+  --c-text-2: #5a606b;
+  --c-border: #d5d9df;
+  --c-border-input: #8a919c;
+  --c-cta: var(--pg-rouge);
+  --c-cta-hover: var(--pg-rouge-hover);
+  --c-cta-text: #ffffff;
+  --c-link: var(--pg-rouge);
+  --c-nav: var(--pg-noir);
+  --c-nav-text: #ffffff;
+  --c-focus: #1d4ed8;
+
+  --c-success: #1e7b4a;
+  --c-success-bg: #e7f4ec;
+  --c-warning: #9a5200;
+  --c-warning-bg: #fdf1e3;
+  --c-danger: #b42318;
+  --c-danger-bg: #fdecea;
+  --c-info: #1d4ed8;
+  --c-info-bg: #e8eefc;
+  --c-muted: #6b7280;
+  --c-muted-bg: #eef0f3;
+
+  --font-title: "Saira", "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.0625rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 1.875rem;
+  --fs-kpi: 2rem;
+  --lh-tight: 1.2;
+  --lh-body: 1.5;
+
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  --sh-sm: 0 1px 2px rgba(17, 18, 20, 0.06), 0 1px 3px rgba(17, 18, 20, 0.08);
+  --sh-md: 0 4px 12px rgba(17, 18, 20, 0.1);
+  --sh-lg: 0 12px 32px rgba(17, 18, 20, 0.16);
+
+  --tap-min: 48px;
+  --btn-h: 48px;
+  --btn-xl-h: 64px;
+  --nav-bottom-h: 64px;
+  --sidebar-w: 248px;
+  --container-max: 1280px;
+
+  --t-fast: 150ms ease;
+  --t-base: 200ms ease;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-bg: #0e0f11;
+    --c-surface: #17191d;
+    --c-surface-2: #22252b;
+    --c-text: #ecedef;
+    --c-text-2: #a7adb7;
+    --c-border: #30343b;
+    --c-border-input: #6b727d;
+    --c-cta: #c42a31;
+    --c-cta-hover: #d8363e;
+    --c-link: #f0686d;
+    --c-nav: #0b0c0e;
+    --c-focus: #6ea8fe;
+    --pg-rouge-voile: #3a1517;
+    --c-success: #4cc38a;
+    --c-success-bg: #12291d;
+    --c-warning: #f0a54a;
+    --c-warning-bg: #2d2112;
+    --c-danger: #ff7a70;
+    --c-danger-bg: #33161a;
+    --c-info: #6ea8fe;
+    --c-info-bg: #142038;
+    --c-muted: #9aa1ac;
+    --c-muted-bg: #24272d;
+    --sh-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --sh-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --sh-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+  }
+}
+
+:root[data-theme="dark"] {
+  --c-bg: #0e0f11;
+  --c-surface: #17191d;
+  --c-surface-2: #22252b;
+  --c-text: #ecedef;
+  --c-text-2: #a7adb7;
+  --c-border: #30343b;
+  --c-border-input: #6b727d;
+  --c-cta: #c42a31;
+  --c-cta-hover: #d8363e;
+  --c-link: #f0686d;
+  --c-nav: #0b0c0e;
+  --c-focus: #6ea8fe;
+  --pg-rouge-voile: #3a1517;
+  --c-success: #4cc38a;
+  --c-success-bg: #12291d;
+  --c-warning: #f0a54a;
+  --c-warning-bg: #2d2112;
+  --c-danger: #ff7a70;
+  --c-danger-bg: #33161a;
+  --c-info: #6ea8fe;
+  --c-info-bg: #142038;
+  --c-muted: #9aa1ac;
+  --c-muted-bg: #24272d;
+  --sh-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --sh-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --sh-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 0ms;
+    --t-base: 0ms;
+  }
+}

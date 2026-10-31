@@ -1,0 +1,48 @@
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+
+<IfModule mod_mime.c>
+    AddType application/manifest+json .webmanifest
+    AddType font/woff2 .woff2
+</IfModule>
+
+# Fichiers cachés, fichiers de configuration et sauvegardes d'éditeur.
+<FilesMatch "(^\.|\.(ini|log|sql|env|dist|lock|bak|swp)$|~$)">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # HTTPS obligatoire, sauf sur le poste de développement.
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Le Service Worker et le manifeste ne doivent jamais être servis depuis un cache périmé.
+    RewriteRule ^(sw\.js|manifest\.webmanifest)$ - [L,E=NO_CACHE:1]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    <FilesMatch "\.m?js$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+    Header set Cache-Control "no-cache" env=NO_CACHE
+    Header set Service-Worker-Allowed "/" env=NO_CACHE
+</IfModule>
+
+# Feuilles de style et polices sont appelées avec un paramètre de version (?v=…) : cache long.
+# Les modules JavaScript s'importent entre eux sans ce paramètre : ils sont revalidés à chaque chargement.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>

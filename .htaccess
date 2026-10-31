@@ -1,0 +1,3 @@
+# Seul public/ doit être exposé. Ce fichier protège le reste du projet
+# si la racine web est mal configurée.
+Require all denied
